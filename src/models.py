@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from typing import List
+from typing import List, Optional
 
 
 # 1. Weather Condition (reusable for both location and hourly data)
@@ -73,4 +73,79 @@ class HistoricalWeatherApiResponse(BaseModel):
         # Return a new instance of HistoricalWeatherApiResponse, passing the parsed location
         # and the list of parsed ForecastDayHistorical objects as part of the 'forecast' dictionary.
         return cls(location=LocationData.model_validate(data["location"]), forecast={"forecastday": parsed_forecastday})
+
+# -- Models for the Warehouse DB
+# 6. DimTemps Model
+class DimTemps(BaseModel):
+    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+    datetime_key: str  # Primary key (DATETIME)
+    annee: int
+    mois: int
+    jour: int
+    heure: int
+    minute: int
+    jour_semaine: str
+    nom_mois: str
+
+
+# 7. DimLieux Model
+class DimLieux(BaseModel):
+    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+    # id_dim_lieu: Optional[int]  # Auto-increment primary key
+    nom_ville: str
+    region: Optional[str]
+    pays: str
+
+
+# 8. DimConditionsMeteo Model
+class DimConditionsMeteo(BaseModel):
+    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+    # id_dim_condition: int  # Primary key
+    code_condition: int
+    texte_condition: str
+
+
+# 9. FaitDonneesMeteo Model
+class FaitDonneesMeteo(BaseModel):
+    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+    # id_observation_horaire: Optional[int]  # Auto-increment primary key
+    id_dim_lieu_fk: int  # Foreign key to DimLieux
+    datetime_fk: str  # Foreign key to DimTemps
+    id_dim_condition_fk: int  # Foreign key to DimConditionsMeteo
+    temperature_celsius: float
+    vent_kph: float
+    vent_degre: int
+    direction_vent: str
+    pression_millibars: float
+    precipitation_mm: float
+    humidite_pourcentage: int
+    nuages_pourcentage: int
+    visibilite_km: float
+    indice_uv: float
+    rafales_kph: float
+
+
+# 10. Current Weather Data (matching the 'donnees_meteo' table for DB storage)
+class CurrentWeatherData(BaseModel):
+    model_config = ConfigDict(extra='ignore')  # Ignore extra fields from source JSON
+    last_updated: str  # Maps to datetime_observation in DB
+    temp_c: float  # Maps to temperature_celsius in DB
+    condition: Condition  # Nested Pydantic model for weather condition (code will be FK in DB)
+    wind_kph: float  # Maps to vent_kph in DB
+    wind_degree: int  # Maps to vent_degre in DB
+    wind_dir: str  # Maps to direction_vent in DB
+    pressure_mb: float  # Maps to pression_millibars in DB
+    precip_mm: float  # Maps to precipitation_mm in DB
+    humidity: int  # Maps to humidite_pourcentage in DB
+    cloud: int  # Maps to nuages_pourcentage in DB
+    vis_km: float  # Maps to visibilite_km in DB
+    uv: float  # Maps to indice_uv in DB
+    gust_kph: float  # Maps to rafales_kph in DB
+
+
+# 11. Overall Current Weather API Response
+class CurrentWeatherApiResponse(BaseModel):
+    model_config = ConfigDict(extra='ignore')  # Ignore any top-level extra fields if present
+    location: LocationData  # The simplified LocationData model
+    current: CurrentWeatherData  # The CurrentWeatherData model
 

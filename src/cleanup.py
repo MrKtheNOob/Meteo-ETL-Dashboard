@@ -50,7 +50,7 @@ if __name__ == "__main__":
     print("INFO: Ensure the MySQL service is running.")
     print("INFO: Install the PyMySQL connector if not already installed: pip install pymysql")
     print("\nWARNING: This script will delete all data from the specified tables!")
-    conn = get_db_connection()
+    conn = get_db_connection("meteo")
     if conn is None:
         print("ERROR: Failed to establish database connection.")
     else:
