@@ -2,4 +2,4 @@ pymysql==1.0.3
 flask==2.3.2
 flask-caching==1.10.1
 python-dotenv==1.0.0
-pydantic==2.0.3
+pydantic==1.10.13
