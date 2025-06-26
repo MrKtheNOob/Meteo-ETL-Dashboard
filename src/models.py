@@ -4,17 +4,14 @@ from typing import List, Optional
 
 # 1. Weather Condition (reusable for both location and hourly data)
 class Condition(BaseModel):
-    model_config = ConfigDict(extra='ignore') # Ignore 'icon' and other potential extra fields from source JSON
     text: str
     code: int
     # icon: Optional[HttpUrl] = None # Icon URL, present in source JSON, but only 'code' and 'text' are typically stored in DB
 
 # 2. Location Data (now matching the *simplified* 'lieux' table for DB storage)
 # Fields like 'lat', 'lon', 'tz_id', 'localtime_epoch', 'localtime' are present in the source JSON,
-# but are explicitly excluded from this Pydantic model to reflect the simplified 'lieux' DB table.
-# The 'extra='ignore'' setting will prevent validation errors if these fields are in the input JSON.
+# but are explicitly excluded from this Pydantic model to reflect the simplified 'lieux' DB table
 class LocationData(BaseModel):
-    model_config = ConfigDict(extra='ignore') # Ignore 'lat', 'lon', 'tz_id', 'localtime_epoch', 'localtime' from source JSON
     name: str
     region: str
     country: str
@@ -24,7 +21,6 @@ class LocationData(BaseModel):
 # are present in the source JSON but are explicitly excluded from this Pydantic model
 # to align with the simplified 'donnees_meteo' DB table.
 class HourlyHistoricalData(BaseModel):
-    model_config = ConfigDict(extra='ignore') # Ignore 'is_day', 'chance_of_rain' and other extra fields from source JSON
     time: str # Raw time string from JSON (e.g., "YYYY-MM-DD HH:MM") - will be converted to datetime_observation in DB
     temp_c: float # Maps to temperature_celsius in DB
     condition: Condition # Nested Pydantic model for weather condition (code will be FK in DB)
@@ -50,14 +46,12 @@ class HourlyHistoricalData(BaseModel):
 # 4. Forecast Day Container (to extract hourly data from each day's forecast)
 # This model represents the structure of a single 'forecastday' object in the API response.
 class ForecastDayHistorical(BaseModel):
-    model_config = ConfigDict(extra='ignore') # Ignore 'day' and other potential extra fields
     date: str # Date of the forecast day (e.g., "YYYY-MM-DD")
     hour: List[HourlyHistoricalData] # List of hourly data for this day, using the simplified HourlyHistoricalData model
 
 # 5. Overall Historical Weather API Response
 # This model represents the top-level structure of the API response.
 class HistoricalWeatherApiResponse(BaseModel):
-    model_config = ConfigDict(extra='ignore') # Ignore any top-level extra fields if present
     location: LocationData # The simplified LocationData model
     forecast: dict # Use dict to access 'forecastday' as it's a dynamic key in the validator
     
@@ -65,19 +59,19 @@ class HistoricalWeatherApiResponse(BaseModel):
     # This method is crucial because the 'forecast' field in the API response is a dictionary
     # that contains 'forecastday' as one of its keys.
     @classmethod
-    def model_validate(cls, data: dict):
+    def parse_obj(cls, data: dict):
         forecastday_data = data.get("forecast", {}).get("forecastday", [])
         # Create a list of ForecastDayHistorical instances from the extracted data
-        parsed_forecastday = [ForecastDayHistorical.model_validate(day_data) for day_data in forecastday_data]
+        parsed_forecastday = [ForecastDayHistorical.parse_obj(day_data) for day_data in forecastday_data]
         
         # Return a new instance of HistoricalWeatherApiResponse, passing the parsed location
         # and the list of parsed ForecastDayHistorical objects as part of the 'forecast' dictionary.
-        return cls(location=LocationData.model_validate(data["location"]), forecast={"forecastday": parsed_forecastday})
+        return cls(location=LocationData.parse_obj(data["location"]), forecast={"forecastday": parsed_forecastday})
 
 # -- Models for the Warehouse DB
 # 6. DimTemps Model
 class DimTemps(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+
     datetime_key: str  # Primary key (DATETIME)
     annee: int
     mois: int
@@ -90,7 +84,7 @@ class DimTemps(BaseModel):
 
 # 7. DimLieux Model
 class DimLieux(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+
     # id_dim_lieu: Optional[int]  # Auto-increment primary key
     nom_ville: str
     region: Optional[str]
@@ -99,7 +93,7 @@ class DimLieux(BaseModel):
 
 # 8. DimConditionsMeteo Model
 class DimConditionsMeteo(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+
     # id_dim_condition: int  # Primary key
     code_condition: int
     texte_condition: str
@@ -107,7 +101,7 @@ class DimConditionsMeteo(BaseModel):
 
 # 9. FaitDonneesMeteo Model
 class FaitDonneesMeteo(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore extra fields
+
     # id_observation_horaire: Optional[int]  # Auto-increment primary key
     id_dim_lieu_fk: int  # Foreign key to DimLieux
     datetime_fk: str  # Foreign key to DimTemps
@@ -127,7 +121,6 @@ class FaitDonneesMeteo(BaseModel):
 
 # 10. Current Weather Data (matching the 'donnees_meteo' table for DB storage)
 class CurrentWeatherData(BaseModel):
-    model_config = ConfigDict(extra='ignore')  # Ignore extra fields from source JSON
     last_updated: str  # Maps to datetime_observation in DB
     temp_c: float  # Maps to temperature_celsius in DB
     condition: Condition  # Nested Pydantic model for weather condition (code will be FK in DB)
@@ -145,7 +138,6 @@ class CurrentWeatherData(BaseModel):
 
 # 11. Overall Current Weather API Response
 class CurrentWeatherApiResponse(BaseModel):
-    model_config = ConfigDict(extra='ignore')  # Ignore any top-level extra fields if present
     location: LocationData  # The simplified LocationData model
     current: CurrentWeatherData  # The CurrentWeatherData model
 

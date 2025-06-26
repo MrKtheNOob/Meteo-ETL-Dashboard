@@ -24,7 +24,7 @@ def fetch_current_weather_data(city: str) -> Optional[CurrentWeatherApiResponse]
         response.raise_for_status()
         data = response.json()
         # Validate and parse the response using the Pydantic model
-        weather_data = CurrentWeatherApiResponse.model_validate(data)
+        weather_data = CurrentWeatherApiResponse.parse_obj(data)
         return weather_data
     except requests.exceptions.RequestException as e:
         print(f"HTTP Request failed for {city}: {e}")
