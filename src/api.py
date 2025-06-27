@@ -3,6 +3,11 @@ from flask_caching import Cache
 from ETL import run_etl
 from utils import get_db_connection
 import threading
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -65,4 +70,6 @@ def get_etl_logs():
         conn.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Get the server port from the .env file, default to 5000 if not set
+    port = int(os.getenv("PORT", 5000))
+    app.run(debug=True, port=port)
