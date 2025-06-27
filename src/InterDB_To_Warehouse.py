@@ -1,3 +1,4 @@
+import time
 from utils import get_db_connection
 from models import DimTemps, DimLieux, DimConditionsMeteo, FaitDonneesMeteo
 from datetime import datetime
@@ -280,18 +281,22 @@ def transfer_data_to_warehouse() -> None:
     try:
         print("INFO: Transferring DimTemps...")
         transfer_dim_temps(cursor_source, cursor_target)
+        time.sleep(0.5)
         print("INFO: DimTemps transfer completed successfully.")
 
         print("INFO: Transferring DimLieux...")
         transfer_dim_lieux(cursor_source, cursor_target)
+        time.sleep(0.5)
         print("INFO: DimLieux transfer completed successfully.")
 
         print("INFO: Transferring DimConditionsMeteo...")
         transfer_dim_conditions_meteo(cursor_source, cursor_target)
+        time.sleep(0.5)
         print("INFO: DimConditionsMeteo transfer completed successfully.")
 
         print("INFO: Transferring FaitDonneesMeteo...")
         transfer_fait_donnees_meteo(cursor_source, cursor_target)
+        time.sleep(0.5)
         print("INFO: FaitDonneesMeteo transfer completed successfully.")
 
         conn_target.commit()
