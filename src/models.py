@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 
@@ -69,54 +70,48 @@ class HistoricalWeatherApiResponse(BaseModel):
         return cls(location=LocationData.parse_obj(data["location"]), forecast={"forecastday": parsed_forecastday})
 
 # -- Models for the Warehouse DB
+
 # 6. DimTemps Model
 class DimTemps(BaseModel):
-
-    datetime_key: str  # Primary key (DATETIME)
-    annee: int
-    mois: int
-    jour: int
-    heure: int
-    minute: int
-    jour_semaine: str
-    nom_mois: str
+    date: str  # Matches 'date' in DimTemps (DATE type)
+    annee: int  # Matches 'annee' in DimTemps
+    mois: int  # Matches 'mois' in DimTemps
+    jour: int  # Matches 'jour' in DimTemps
+    heure: int  # Matches 'heure' in DimTemps
+    minute: int  # Matches 'minute' in DimTemps
+    jour_semaine: str  # Matches 'jour_semaine' in DimTemps
+    nom_mois: str  # Matches 'nom_mois' in DimTemps
 
 
 # 7. DimLieux Model
 class DimLieux(BaseModel):
-
-    # id_dim_lieu: Optional[int]  # Auto-increment primary key
-    nom_ville: str
-    region: Optional[str]
-    pays: str
+    nom_ville: str  # Matches 'nom_ville' in DimLieux
+    region: Optional[str]  # Matches 'region' in DimLieux
+    pays: str  # Matches 'pays' in DimLieux
 
 
 # 8. DimConditionsMeteo Model
 class DimConditionsMeteo(BaseModel):
-
-    # id_dim_condition: int  # Primary key
-    code_condition: int
-    texte_condition: str
+    code_condition: int  # Matches 'code_condition' in DimConditionsMeteo
+    texte_condition: str  # Matches 'texte_condition' in DimConditionsMeteo
 
 
 # 9. FaitDonneesMeteo Model
 class FaitDonneesMeteo(BaseModel):
-
-    # id_observation_horaire: Optional[int]  # Auto-increment primary key
-    id_dim_lieu_fk: int  # Foreign key to DimLieux
-    datetime_fk: str  # Foreign key to DimTemps
-    id_dim_condition_fk: int  # Foreign key to DimConditionsMeteo
-    temperature_celsius: float
-    vent_kph: float
-    vent_degre: int
-    direction_vent: str
-    pression_millibars: float
-    precipitation_mm: float
-    humidite_pourcentage: int
-    nuages_pourcentage: int
-    visibilite_km: float
-    indice_uv: float
-    rafales_kph: float
+    id_dim_lieu_fk: int  # Matches 'id_dim_lieu_fk' in FaitDonneesMeteo (Foreign key to DimLieux.id_dim_lieu)
+    date_fk: datetime  # Matches 'datetime_fk' in FaitDonneesMeteo (Foreign key to DimTemps.date)
+    id_dim_condition_fk: int  # Matches 'id_dim_condition_fk' in FaitDonneesMeteo (Foreign key to DimConditionsMeteo.id_dim_condition)
+    temperature_celsius: float  # Matches 'temperature_celsius' in FaitDonneesMeteo
+    vent_kph: float  # Matches 'vent_kph' in FaitDonneesMeteo
+    vent_degre: int  # Matches 'vent_degre' in FaitDonneesMeteo
+    direction_vent: str  # Matches 'direction_vent' in FaitDonneesMeteo
+    pression_millibars: float  # Matches 'pression_millibars' in FaitDonneesMeteo
+    precipitation_mm: float  # Matches 'precipitation_mm' in FaitDonneesMeteo
+    humidite_pourcentage: int  # Matches 'humidite_pourcentage' in FaitDonneesMeteo
+    nuages_pourcentage: int  # Matches 'nuages_pourcentage' in FaitDonneesMeteo
+    visibilite_km: float  # Matches 'visibilite_km' in FaitDonneesMeteo
+    indice_uv: float  # Matches 'indice_uv' in FaitDonneesMeteo
+    rafales_kph: float  # Matches 'rafales_kph' in FaitDonneesMeteo
 
 
 # 10. Current Weather Data (matching the 'donnees_meteo' table for DB storage)
