@@ -1,3 +1,4 @@
+import time
 from dotenv import load_dotenv
 from datetime import datetime
 from InterDB_To_Warehouse import transfer_data_to_warehouse
@@ -131,7 +132,7 @@ def run_etl() -> None:
     print("INFO: Starting data extraction and loading into intermediate database...")
     for city in UEMOA_CITIES:
         process_city_data(city)
-
+        time.sleep(0.5)
     print("INFO: Starting data transfer to warehouse...")
     try:
         transfer_data_to_warehouse()  # Hook to transfer data from intermediate DB to warehouse
