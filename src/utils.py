@@ -53,31 +53,35 @@ TABLE_CREATE_STATEMENTS = [
 ]
 
 
-def connect_mysql() -> Connection:
-    """Establishes and returns a database connection using hardcoded parameters."""
+def connect_mysql(db_name: str) -> Connection:
+    """
+    Establishes and returns a database connection using the given database name.
+    """
     load_dotenv()
     timeout = 10
     connection = pymysql.connect(
         charset="utf8mb4",
         connect_timeout=timeout,
         cursorclass=cursors.DictCursor,
-        db=os.getenv("DB_NAME", ""),
+        db=db_name,  # Use the provided database name
         host=os.getenv("HOST", ""),
         password=os.getenv("PASSWORD", ""),
         read_timeout=timeout,
-        port=int(os.getenv("PORT", "")),
+        port=int(os.getenv("DB_PORT", "")),
         user=os.getenv("DB_USER", ""),
         write_timeout=timeout,
     )
-    print("Database connection established successfully.")
+    print(f"Database connection to '{db_name}' established successfully.")
     return connection
 
 
-def get_db_connection():
-    """Wrapper for connect_mysql to maintain compatibility with existing code."""
+def get_db_connection(db_name: str) -> Connection|None:
+    """
+    Wrapper for connect_mysql to establish a connection to the specified database.
+    """
     try:
-        conn = connect_mysql()
+        conn = connect_mysql(db_name)
         return conn
     except pymysql.Error as e:
-        print(f"Error connecting to MySQL database: {e}")
+        print(f"Error connecting to MySQL database '{db_name}': {e}")
         return None
