@@ -24,6 +24,7 @@ def transfer_dim_temps(cursor_source, cursor_target) -> None:
     print(f"INFO: Found {len(rows)} distinct datetime_observation values in intermediate database.")
 
     for row in rows:
+        time.sleep(0.5)  # Pause to avoid CPU throttling
         datetime_observation = row["datetime_observation"]
         print(f"INFO: Processing datetime_observation '{datetime_observation}'")
 
@@ -72,6 +73,7 @@ def transfer_dim_temps(cursor_source, cursor_target) -> None:
         except Exception as e:
             print(f"ERROR: Failed to insert date '{dim_temps.date}' into DimTemps - {e}")
             continue
+        time.sleep(0.5)  # Pause after each insertion
 
 
 def transfer_dim_lieux(cursor_source, cursor_target) -> None:
@@ -89,6 +91,7 @@ def transfer_dim_lieux(cursor_source, cursor_target) -> None:
     """
     cursor_source.execute(query_source)
     for row in cursor_source.fetchall():
+        time.sleep(0.5)  # Pause to avoid CPU throttling
         dim_lieux = DimLieux(
             nom_ville=row["nom"],
             region=row["region"],
@@ -98,6 +101,8 @@ def transfer_dim_lieux(cursor_source, cursor_target) -> None:
             query_target,
             (dim_lieux.nom_ville, dim_lieux.region, dim_lieux.pays),
         )
+        print(f"INFO: Inserted or updated location '{dim_lieux.nom_ville}' in DimLieux.")
+        time.sleep(0.5)  # Pause after each insertion
 
 
 def transfer_dim_conditions_meteo(cursor_source, cursor_target) -> None:
@@ -115,6 +120,7 @@ def transfer_dim_conditions_meteo(cursor_source, cursor_target) -> None:
     """
     cursor_source.execute(query_source)
     for row in cursor_source.fetchall():
+        time.sleep(0.5)  # Pause to avoid CPU throttling
         dim_conditions = DimConditionsMeteo(
             code_condition=row["code_condition"],
             texte_condition=row["texte_condition"],
@@ -127,6 +133,7 @@ def transfer_dim_conditions_meteo(cursor_source, cursor_target) -> None:
             ),
         )
         print(f"INFO: Inserted or updated condition '{dim_conditions.code_condition}' in DimConditionsMeteo.")
+        time.sleep(0.5)  # Pause after each insertion
 
 
 def transfer_fait_donnees_meteo(cursor_source, cursor_target) -> None:
@@ -171,6 +178,7 @@ def transfer_fait_donnees_meteo(cursor_source, cursor_target) -> None:
     """
     cursor_source.execute(query_source)
     for row in cursor_source.fetchall():
+        time.sleep(0.5)  # Pause to avoid CPU throttling
         print(f"INFO: Processing row with id_lieu '{row['id_lieu']}' and date_observation '{row['date_observation']}'")
 
         # Get the location name from the intermediate DB's lieux table
@@ -261,6 +269,7 @@ def transfer_fait_donnees_meteo(cursor_source, cursor_target) -> None:
             ),
         )
         print(f"INFO: Successfully inserted data for id_lieu '{row['id_lieu']}' and date_observation '{date_str}'")
+        time.sleep(0.5)  # Pause after each insertion
 
 
 def transfer_data_to_warehouse() -> None:
