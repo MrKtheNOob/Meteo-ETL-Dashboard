@@ -1,15 +1,13 @@
 import time
 from dotenv import load_dotenv
 from datetime import datetime
-from InterDB_To_Warehouse import transfer_data_to_warehouse
+from transform import transform_load_to_warehouse
 from Extract import WEATHERAPI_KEY, fetch_current_weather_data
 from Load_To_InterDB import insert_location, insert_weather_data
 from cleanup import cleanup_and_recreate_db
 from utils import get_db_connection
 from models import CurrentWeatherApiResponse
 from typing import Optional
-import gc
-import psutil  # Added for memory usage monitoring
 
 load_dotenv()
 
@@ -49,13 +47,6 @@ def log_etl_process(process_name: str, status: str, start_time: datetime, end_ti
         cursor.close()
         conn.close()
 
-def print_memory_usage():
-    """
-    Prints the current memory usage of the process.
-    """
-    process = psutil.Process()
-    memory_info = process.memory_info()
-    print(f"INFO: Current memory usage: {memory_info.rss / (1024 * 1024):.2f} MB")
 
 def process_city_data(city: str) -> None:
     """
@@ -103,39 +94,34 @@ def process_city_data(city: str) -> None:
         conn.close()
         log_etl_process("process_city_data", "success", start_time, datetime.now(), rows_processed=rows_processed)
         print(f"INFO: Finished processing data for {city}.")
-
-        # Trigger garbage collection after processing the city
-        print(f"INFO: Triggering garbage collection after processing {city}.")
-        gc.collect()
-
-        # Print memory usage after processing the city
-        print_memory_usage()
+        
 
 def run_etl() -> None:
     """Main ETL process running sequentially."""
     start_time = datetime.now()
-    log_etl_process("run_etl", "running", start_time)
-    if not WEATHERAPI_KEY:
-        print("ERROR: WEATHERAPI_KEY is not set. Please provide your WeatherAPI.com API key.")
-        log_etl_process("run_etl", "failed", start_time, error_message="WEATHERAPI_KEY is not set")
-        return
+    # log_etl_process("run_etl", "running", start_time)
+    # if not WEATHERAPI_KEY:
+    #     print("ERROR: WEATHERAPI_KEY is not set. Please provide your WeatherAPI.com API key.")
+    #     log_etl_process("run_etl", "failed", start_time, error_message="WEATHERAPI_KEY is not set")
+    #     return
 
-    print("INFO: Starting database cleanup...")
-    conn = get_db_connection("meteo")
-    if conn is None:
-        print("ERROR: Failed to establish database connection for cleanup.")
-        return
+    # print("INFO: Starting database cleanup...")
+    # conn = get_db_connection("meteo")
+    # if conn is None:
+    #     print("ERROR: Failed to establish database connection for cleanup.")
+    #     return
 
-    cleanup_and_recreate_db(conn.cursor())
-    conn.close()
+    # cleanup_and_recreate_db(conn.cursor())
+    # conn.close()
 
-    print("INFO: Starting data extraction and loading into intermediate database...")
-    for city in UEMOA_CITIES:
-        process_city_data(city)
-        time.sleep(0.5)
+    # print("INFO: Starting data extraction and loading into intermediate database...")
+    # for city in UEMOA_CITIES:
+    #     process_city_data(city)
+    #     time.sleep(0.5)
+
     print("INFO: Starting data transfer to warehouse...")
     try:
-        transfer_data_to_warehouse()  # Hook to transfer data from intermediate DB to warehouse
+        transform_load_to_warehouse()  # Hook to transfer data from intermediate DB to warehouse
         log_etl_process("transfer_data_to_warehouse", "success", start_time, datetime.now())
     except Exception as e:
         print(f"ERROR: Data transfer to warehouse failed - {e}")

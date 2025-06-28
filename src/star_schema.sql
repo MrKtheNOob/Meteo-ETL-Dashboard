@@ -28,7 +28,7 @@ CREATE TABLE DimTemps (
 -- DimLieux Table
 CREATE TABLE DimLieux (
     id_dim_lieu INT AUTO_INCREMENT PRIMARY KEY, -- Auto-increment for unique IDs
-    nom_ville VARCHAR(255) NOT NULL,            --
+    nom_ville VARCHAR(255) NOT NULL UNIQUE,     -- Made nom_ville unique
     region VARCHAR(255),                        --
     pays VARCHAR(255) NOT NULL                  --
 );

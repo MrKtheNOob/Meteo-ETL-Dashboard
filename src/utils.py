@@ -72,7 +72,7 @@ def connect_mysql(db_name: str) -> Connection:
         host=os.getenv("HOST", ""),
         password=os.getenv("PASSWORD", ""),
         read_timeout=timeout,
-        port=int(os.getenv("DB_PORT", "")),
+        port=int(os.getenv("PORT", "")),
         user=os.getenv("DB_USER", ""),
         write_timeout=timeout,
     )

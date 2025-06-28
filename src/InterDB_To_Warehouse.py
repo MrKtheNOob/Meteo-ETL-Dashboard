@@ -1,6 +1,6 @@
 import time
 from utils import get_db_connection
-from models import DimTemps, DimLieux, DimConditionsMeteo, FaitDonneesMeteo
+from models import DimTemps, DimLieux, DimConditionsMeteo
 from datetime import datetime
 
 
