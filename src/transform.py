@@ -1,21 +1,22 @@
 import os
 import pymysql
-from dotenv import load_dotenv
+# This line is crucial for pandas and SQLAlchemy to properly use pymysql
+# when they might be expecting the 'MySQLdb' driver.
+
 import pandas as pd
 from datetime import datetime, date
 from typing import Optional, cast, List, Dict, Any
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from utils import get_db_connection 
-
-load_dotenv()
+from utils import get_db_connection # Import the function as requested
 
 pymysql.install_as_MySQLdb()
-
+# --- Database Configuration for SQLAlchemy Engine (UPDATE THESE WITH YOUR ACTUAL CREDENTIALS) ---
+# This is needed for pandas.to_sql when using a SQLAlchemy engine for loading
 DB_SQL_ALCHEMY_URLS = {
-    'source_db_url': f"{os.getenv("DB_LINK")}/meteo",
-    'target_db_url': f"{os.getenv("DB_LINK")}/meteo_warehouse"
+    'source_db_url': f'{os.getenv("DB_LINK")}/meteo',
+    'target_db_url': f'{os.getenv("DB_LINK")}/meteo_warehouse'
 }
 
 def extract_data_to_dataframe(conn: pymysql.connections.Connection, query: str) -> pd.DataFrame:

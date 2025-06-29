@@ -72,7 +72,7 @@ def _fetch_all_weather_data():
         JOIN DimLieux l ON f.id_dim_lieu_fk = l.id_dim_lieu
         JOIN DimTemps t ON f.id_dim_temps_fk = t.id_dim_temps
         JOIN DimConditionsMeteo c ON f.id_dim_condition_fk = c.id_dim_condition
-        ORDER BY t.date DESC, t.heure DESC
+        ORDER BY t.date DESC, t.heure DESC limit 1000
         """
         
         cursor.execute(query)

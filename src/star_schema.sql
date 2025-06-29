@@ -59,7 +59,6 @@ CREATE TABLE FaitDonneesMeteo (
     indice_uv DECIMAL(4,1) NOT NULL,                     --
     rafales_kph DECIMAL(5,2) NOT NULL,                   --
 
-    UNIQUE (id_dim_lieu_fk, id_dim_temps_fk),            -- Unique constraint updated
 
     FOREIGN KEY (id_dim_lieu_fk) REFERENCES DimLieux(id_dim_lieu),           --
     FOREIGN KEY (id_dim_temps_fk) REFERENCES DimTemps(id_dim_temps),         -- Foreign key references new primary key

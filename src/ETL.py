@@ -10,10 +10,10 @@ from models import CurrentWeatherApiResponse
 from typing import Optional
 
 load_dotenv()
-
+# "Africa/Cotonou",
 # --- ETL Configuration ---
 UEMOA_CITIES = [
-    "Africa/Cotonou", "Africa/Porto-Novo", "Africa/Bafata",  # Bénin
+     "Africa/Porto-Novo", "Africa/Bafata",  # Bénin
     "Africa/Ouagadougou", "Africa/Bobo-Dioulasso",           # Burkina Faso
     "Africa/Abidjan", "Africa/Yamoussoukro", "Africa/Bouake",  # Côte d'Ivoire
     "Africa/Bissau", "Africa/Gabu", "Africa/Bolama",         # Guinée-Bissau
@@ -99,25 +99,25 @@ def process_city_data(city: str) -> None:
 def run_etl() -> None:
     """Main ETL process running sequentially."""
     start_time = datetime.now()
-    # log_etl_process("run_etl", "running", start_time)
-    # if not WEATHERAPI_KEY:
-    #     print("ERROR: WEATHERAPI_KEY is not set. Please provide your WeatherAPI.com API key.")
-    #     log_etl_process("run_etl", "failed", start_time, error_message="WEATHERAPI_KEY is not set")
-    #     return
+    log_etl_process("run_etl", "running", start_time)
+    if not WEATHERAPI_KEY:
+        print("ERROR: WEATHERAPI_KEY is not set. Please provide your WeatherAPI.com API key.")
+        log_etl_process("run_etl", "failed", start_time, error_message="WEATHERAPI_KEY is not set")
+        return
 
-    # print("INFO: Starting database cleanup...")
-    # conn = get_db_connection("meteo")
-    # if conn is None:
-    #     print("ERROR: Failed to establish database connection for cleanup.")
-    #     return
+    print("INFO: Starting database cleanup...")
+    conn = get_db_connection("meteo")
+    if conn is None:
+        print("ERROR: Failed to establish database connection for cleanup.")
+        return
 
-    # cleanup_and_recreate_db(conn.cursor())
-    # conn.close()
+    cleanup_and_recreate_db(conn.cursor())
+    conn.close()
 
-    # print("INFO: Starting data extraction and loading into intermediate database...")
-    # for city in UEMOA_CITIES:
-    #     process_city_data(city)
-    #     time.sleep(0.5)
+    print("INFO: Starting data extraction and loading into intermediate database...")
+    for city in UEMOA_CITIES:
+        process_city_data(city)
+        time.sleep(0.5)
 
     print("INFO: Starting data transfer to warehouse...")
     try:
