@@ -1,3 +1,4 @@
+--Table intérogée par l'API pour sauvegarder et indiquer l'historique du fonctionnement des jobs
 CREATE TABLE etl_logs (
     log_id SERIAL PRIMARY KEY,
     process_name VARCHAR(255) NOT NULL,
