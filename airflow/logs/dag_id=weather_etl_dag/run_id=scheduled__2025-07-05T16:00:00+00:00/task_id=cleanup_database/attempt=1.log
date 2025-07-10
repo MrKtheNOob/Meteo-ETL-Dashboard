@@ -1,0 +1,30 @@
+{"timestamp":"2025-07-06T23:48:49.322060","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-07-06T23:48:49.323091","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_etl_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-07-06T23:48:49.975986Z","level":"info","event":"INFO: Starting DB cleanup...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:51.837234Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:51.837507Z","level":"info","event":"--- Disabling foreign key checks ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:52.736559Z","level":"info","event":"SUCCESS: Disabling foreign key checks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:52.736895Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:52.737102Z","level":"info","event":"--- Dropping existing tables ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:52.737299Z","level":"info","event":"--- Dropping table donnees_meteo ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.096774Z","level":"info","event":"SUCCESS: Dropping table donnees_meteo","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.097034Z","level":"info","event":"--- Dropping table conditions_meteo ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.636345Z","level":"info","event":"SUCCESS: Dropping table conditions_meteo","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.636997Z","level":"info","event":"--- Dropping table lieux ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.996454Z","level":"info","event":"SUCCESS: Dropping table lieux","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:53.996627Z","level":"info","event":"--- Re-enabling foreign key checks ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.540448Z","level":"info","event":"SUCCESS: Re-enabling foreign key checks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.540731Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.540933Z","level":"info","event":"--- Creating new tables ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.541076Z","level":"info","event":"--- Creating table lieux ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.896559Z","level":"info","event":"SUCCESS: Creating table lieux","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:54.896740Z","level":"info","event":"--- Creating table conditions_meteo ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.259236Z","level":"info","event":"SUCCESS: Creating table conditions_meteo","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.259647Z","level":"info","event":"--- Creating table donnees_meteo ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.615796Z","level":"info","event":"SUCCESS: Creating table donnees_meteo","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.615967Z","level":"info","event":"--- Creating table etl_logs ---","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.981752Z","level":"info","event":"ERROR: Failed to execute 'Creating table etl_logs' - (1050, \"Table 'etl_logs' already exists\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.982009Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.982184Z","level":"info","event":"SUCCESS: Database cleanup and recreation completed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.982641Z","level":"info","event":"INFO: DB cleanup done.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-06T23:48:55.982880","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}

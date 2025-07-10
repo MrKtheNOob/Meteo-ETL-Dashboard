@@ -1,0 +1,271 @@
+{"timestamp":"2025-07-07T16:50:06.147496","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-07-07T16:50:06.148652","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_etl_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-07-07T16:50:06.847281Z","level":"info","event":"INFO: Starting extraction/loading...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:07.990540Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:07.990777Z","level":"info","event":"Fetching weather for Africa/Porto-Novo...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:09.073376Z","level":"info","event":"INFO: Inserting location 'Porto Novo' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:09.428294Z","level":"info","event":"SUCCESS: Location 'Porto Novo' inserted with ID 1.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:09.428554Z","level":"info","event":"INFO: Processing current weather data for location ID 1...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:09.428645Z","level":"info","event":"INFO: Inserting condition 'Sunny' with code 1000...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:09.788259Z","level":"info","event":"SUCCESS: Condition 'Sunny' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:10.508896Z","level":"info","event":"SUCCESS: Current weather data for location ID 1 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:10.688291Z","level":"info","event":"SUCCESS: Weather data for Africa/Porto-Novo committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:12.370383Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:12.729755Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:12.730141Z","level":"info","event":"INFO: Finished processing Africa/Porto-Novo.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:14.712792Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:14.713022Z","level":"info","event":"Fetching weather for Africa/Bafata...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:15.434634Z","level":"info","event":"INFO: Inserting location 'Bafata' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:16.509994Z","level":"info","event":"SUCCESS: Location 'Bafata' inserted with ID 3.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:16.510284Z","level":"info","event":"INFO: Processing current weather data for location ID 3...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:16.510450Z","level":"info","event":"INFO: Inserting condition 'Light rain shower' with code 1240...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:17.229517Z","level":"info","event":"SUCCESS: Condition 'Light rain shower' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:17.949846Z","level":"info","event":"SUCCESS: Current weather data for location ID 3 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:18.129520Z","level":"info","event":"SUCCESS: Weather data for Africa/Bafata committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:19.389392Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:19.930442Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:19.930771Z","level":"info","event":"INFO: Finished processing Africa/Bafata.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:21.729484Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:21.729739Z","level":"info","event":"Fetching weather for Africa/Ouagadougou...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:22.094115Z","level":"info","event":"INFO: Inserting location 'Ouagadougou' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:22.452574Z","level":"info","event":"SUCCESS: Location 'Ouagadougou' inserted with ID 5.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:22.452835Z","level":"info","event":"INFO: Processing current weather data for location ID 5...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:22.453063Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:22.989417Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:23.529592Z","level":"info","event":"SUCCESS: Current weather data for location ID 5 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:23.709357Z","level":"info","event":"SUCCESS: Weather data for Africa/Ouagadougou committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:24.609466Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:25.152116Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:25.152375Z","level":"info","event":"INFO: Finished processing Africa/Ouagadougou.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:26.831210Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:26.831472Z","level":"info","event":"Fetching weather for Africa/Bobo-Dioulasso...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:27.192582Z","level":"info","event":"INFO: Inserting location 'Bobo Dioulasso' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:27.551143Z","level":"info","event":"SUCCESS: Location 'Bobo Dioulasso' inserted with ID 7.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:27.551592Z","level":"info","event":"INFO: Processing current weather data for location ID 7...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:27.551707Z","level":"info","event":"INFO: Inserting condition 'Light rain' with code 1183...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:27.912694Z","level":"info","event":"SUCCESS: Condition 'Light rain' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:28.993033Z","level":"info","event":"SUCCESS: Current weather data for location ID 7 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:29.357927Z","level":"info","event":"SUCCESS: Weather data for Africa/Bobo-Dioulasso committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:30.253625Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:30.610847Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:30.611072Z","level":"info","event":"INFO: Finished processing Africa/Bobo-Dioulasso.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.232811Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.233072Z","level":"info","event":"Fetching weather for Africa/Abidjan...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.596823Z","level":"info","event":"INFO: Inserting location 'Abidjan' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.950811Z","level":"info","event":"SUCCESS: Location 'Abidjan' inserted with ID 9.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.951009Z","level":"info","event":"INFO: Processing current weather data for location ID 9...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:32.951097Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:33.494007Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:34.033607Z","level":"info","event":"SUCCESS: Current weather data for location ID 9 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:34.210902Z","level":"info","event":"SUCCESS: Weather data for Africa/Abidjan committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:35.290861Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:35.833657Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:35.834083Z","level":"info","event":"INFO: Finished processing Africa/Abidjan.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.271058Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.271376Z","level":"info","event":"Fetching weather for Africa/Yamoussoukro...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.634778Z","level":"info","event":"INFO: Inserting location 'Yamoussoukro' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.990984Z","level":"info","event":"SUCCESS: Location 'Yamoussoukro' inserted with ID 11.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.991229Z","level":"info","event":"INFO: Processing current weather data for location ID 11...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:37.991473Z","level":"info","event":"INFO: Inserting condition 'Patchy rain nearby' with code 1063...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:38.711596Z","level":"info","event":"SUCCESS: Condition 'Patchy rain nearby' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:39.250660Z","level":"info","event":"SUCCESS: Current weather data for location ID 11 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:39.431560Z","level":"info","event":"SUCCESS: Weather data for Africa/Yamoussoukro committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:40.330790Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:40.928467Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:40.928784Z","level":"info","event":"INFO: Finished processing Africa/Yamoussoukro.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:42.545742Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:42.545973Z","level":"info","event":"Fetching weather for Africa/Bouake...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:42.906861Z","level":"info","event":"INFO: Inserting location 'Bouake' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:43.625751Z","level":"info","event":"SUCCESS: Location 'Bouake' inserted with ID 13.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:43.626010Z","level":"info","event":"INFO: Processing current weather data for location ID 13...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:43.626272Z","level":"info","event":"INFO: Inserting condition 'Partly Cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:43.985819Z","level":"info","event":"SUCCESS: Condition 'Partly Cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:44.525879Z","level":"info","event":"SUCCESS: Current weather data for location ID 13 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:44.886406Z","level":"info","event":"SUCCESS: Weather data for Africa/Bouake committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:46.145741Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:46.686444Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:46.686730Z","level":"info","event":"INFO: Finished processing Africa/Bouake.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:48.665803Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:48.666148Z","level":"info","event":"Fetching weather for Africa/Bissau...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:49.750145Z","level":"info","event":"INFO: Inserting location 'Bissau' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:50.465771Z","level":"info","event":"SUCCESS: Location 'Bissau' inserted with ID 15.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:50.465948Z","level":"info","event":"INFO: Processing current weather data for location ID 15...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:50.466038Z","level":"info","event":"INFO: Inserting condition 'Moderate rain' with code 1189...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:51.008514Z","level":"info","event":"SUCCESS: Condition 'Moderate rain' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:51.550432Z","level":"info","event":"SUCCESS: Current weather data for location ID 15 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:51.725810Z","level":"info","event":"SUCCESS: Weather data for Africa/Bissau committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:53.348811Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:53.705769Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:53.706119Z","level":"info","event":"INFO: Finished processing Africa/Bissau.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:55.384890Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:55.385194Z","level":"info","event":"Fetching weather for Africa/Gabu...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:55.745190Z","level":"info","event":"INFO: Inserting location 'Gabu' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:56.104510Z","level":"info","event":"SUCCESS: Location 'Gabu' inserted with ID 17.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:56.104703Z","level":"info","event":"INFO: Processing current weather data for location ID 17...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:56.104806Z","level":"info","event":"INFO: Inserting condition 'Patchy rain nearby' with code 1063...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:56.647146Z","level":"info","event":"SUCCESS: Condition 'Patchy rain nearby' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:57.004614Z","level":"info","event":"SUCCESS: Current weather data for location ID 17 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:57.184732Z","level":"info","event":"SUCCESS: Weather data for Africa/Gabu committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:58.264878Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:58.624546Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:50:58.624933Z","level":"info","event":"INFO: Finished processing Africa/Gabu.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.082565Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.082843Z","level":"info","event":"Fetching weather for Africa/Bolama...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.618810Z","level":"info","event":"INFO: Inserting location 'Bolama' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.964659Z","level":"info","event":"SUCCESS: Location 'Bolama' inserted with ID 19.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.964905Z","level":"info","event":"INFO: Processing current weather data for location ID 19...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:00.965053Z","level":"info","event":"INFO: Inserting condition 'Moderate rain' with code 1189...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:01.324790Z","level":"info","event":"SUCCESS: Condition 'Moderate rain' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:02.047341Z","level":"info","event":"SUCCESS: Current weather data for location ID 19 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:02.225545Z","level":"info","event":"SUCCESS: Weather data for Africa/Bolama committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:04.027495Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:04.384875Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:04.385395Z","level":"info","event":"INFO: Finished processing Africa/Bolama.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:06.544799Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:06.544976Z","level":"info","event":"Fetching weather for Africa/Bamako...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:07.089084Z","level":"info","event":"INFO: Inserting location 'Bamako' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:07.444748Z","level":"info","event":"SUCCESS: Location 'Bamako' inserted with ID 21.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:07.445040Z","level":"info","event":"INFO: Processing current weather data for location ID 21...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:07.445255Z","level":"info","event":"INFO: Inserting condition 'Patchy light rain with thunder' with code 1273...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:07.804872Z","level":"info","event":"SUCCESS: Condition 'Patchy light rain with thunder' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:08.164687Z","level":"info","event":"SUCCESS: Current weather data for location ID 21 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:08.761025Z","level":"info","event":"SUCCESS: Weather data for Africa/Bamako committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:11.103470Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:11.640843Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:11.666202Z","level":"info","event":"INFO: Finished processing Africa/Bamako.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:13.804237Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:13.804502Z","level":"info","event":"Fetching weather for Africa/Sikasso...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:14.162088Z","level":"info","event":"INFO: Inserting location 'Sikasso' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:14.520977Z","level":"info","event":"SUCCESS: Location 'Sikasso' inserted with ID 23.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:14.521230Z","level":"info","event":"INFO: Processing current weather data for location ID 23...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:14.521384Z","level":"info","event":"INFO: Inserting condition 'Partly Cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:14.880932Z","level":"info","event":"SUCCESS: Condition 'Partly Cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:15.420874Z","level":"info","event":"SUCCESS: Current weather data for location ID 23 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:15.601636Z","level":"info","event":"SUCCESS: Weather data for Africa/Sikasso committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:17.400896Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:18.303740Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:18.304173Z","level":"info","event":"INFO: Finished processing Africa/Sikasso.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:19.741177Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:19.741421Z","level":"info","event":"Fetching weather for Africa/Segou...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:20.462439Z","level":"info","event":"INFO: Inserting location 'Segou' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:20.821349Z","level":"info","event":"SUCCESS: Location 'Segou' inserted with ID 25.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:20.821563Z","level":"info","event":"INFO: Processing current weather data for location ID 25...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:20.821677Z","level":"info","event":"INFO: Inserting condition 'Patchy rain nearby' with code 1063...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:21.180928Z","level":"info","event":"SUCCESS: Condition 'Patchy rain nearby' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:21.901588Z","level":"info","event":"SUCCESS: Current weather data for location ID 25 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:22.080851Z","level":"info","event":"SUCCESS: Weather data for Africa/Segou committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:23.399272Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:23.755978Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:23.756208Z","level":"info","event":"INFO: Finished processing Africa/Segou.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:25.378802Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:25.379101Z","level":"info","event":"Fetching weather for Africa/Niamey...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:25.917599Z","level":"info","event":"INFO: Inserting location 'Niamey' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:26.455898Z","level":"info","event":"SUCCESS: Location 'Niamey' inserted with ID 27.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:26.456084Z","level":"info","event":"INFO: Processing current weather data for location ID 27...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:26.456205Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:26.815928Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:27.358657Z","level":"info","event":"SUCCESS: Current weather data for location ID 27 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:27.718896Z","level":"info","event":"SUCCESS: Weather data for Africa/Niamey committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:28.796292Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:29.156491Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:29.156691Z","level":"info","event":"INFO: Finished processing Africa/Niamey.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:30.598713Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:30.598974Z","level":"info","event":"Fetching weather for Africa/Zinder...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:30.957387Z","level":"info","event":"INFO: Inserting location 'Zinder' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:32.036026Z","level":"info","event":"SUCCESS: Location 'Zinder' inserted with ID 30.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:32.036203Z","level":"info","event":"INFO: Processing current weather data for location ID 30...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:32.036402Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:32.395926Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:32.938738Z","level":"info","event":"SUCCESS: Current weather data for location ID 30 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:33.298874Z","level":"info","event":"SUCCESS: Weather data for Africa/Zinder committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:34.196165Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:34.916442Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:34.916793Z","level":"info","event":"INFO: Finished processing Africa/Zinder.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:36.716329Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:36.716586Z","level":"info","event":"Fetching weather for Africa/Maradi...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:37.316623Z","level":"info","event":"INFO: Inserting location 'Maradi' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:37.852554Z","level":"info","event":"SUCCESS: Location 'Maradi' inserted with ID 31.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:37.852785Z","level":"info","event":"INFO: Processing current weather data for location ID 31...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:37.852947Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:38.392130Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:38.752550Z","level":"info","event":"SUCCESS: Current weather data for location ID 31 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:38.932417Z","level":"info","event":"SUCCESS: Weather data for Africa/Maradi committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:40.012802Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:40.372557Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:40.372809Z","level":"info","event":"INFO: Finished processing Africa/Maradi.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:41.812262Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:41.812556Z","level":"info","event":"Fetching weather for Africa/Dakar...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:42.174865Z","level":"info","event":"INFO: Inserting location 'Dakar' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:42.532275Z","level":"info","event":"SUCCESS: Location 'Dakar' inserted with ID 33.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:42.532548Z","level":"info","event":"INFO: Processing current weather data for location ID 33...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:42.532709Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:42.894891Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:43.252249Z","level":"info","event":"SUCCESS: Current weather data for location ID 33 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:43.432533Z","level":"info","event":"SUCCESS: Weather data for Africa/Dakar committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:44.692206Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:45.051695Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:45.070762Z","level":"info","event":"INFO: Finished processing Africa/Dakar.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:46.852705Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:46.852977Z","level":"info","event":"Fetching weather for Africa/Thiès...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:47.778511Z","level":"info","event":"INFO: Inserting location 'Ma-Africa' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:48.832099Z","level":"info","event":"SUCCESS: Location 'Ma-Africa' inserted with ID 35.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:48.832291Z","level":"info","event":"INFO: Processing current weather data for location ID 35...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:48.832382Z","level":"info","event":"INFO: Inserting condition 'Clear' with code 1000...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:50.066979Z","level":"info","event":"SUCCESS: Condition 'Clear' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:50.677416Z","level":"info","event":"SUCCESS: Current weather data for location ID 35 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:50.854638Z","level":"info","event":"SUCCESS: Weather data for Africa/Thiès committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:51.769809Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:52.129245Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:52.129594Z","level":"info","event":"INFO: Finished processing Africa/Thiès.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:54.471364Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:54.471621Z","level":"info","event":"Fetching weather for Africa/Saint-Louis...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:54.830594Z","level":"info","event":"INFO: Inserting location 'Saint-Louis' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:55.189669Z","level":"info","event":"SUCCESS: Location 'Saint-Louis' inserted with ID 37.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:55.190001Z","level":"info","event":"INFO: Processing current weather data for location ID 37...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:55.190229Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:55.910263Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:56.993526Z","level":"info","event":"SUCCESS: Current weather data for location ID 37 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:57.169766Z","level":"info","event":"SUCCESS: Weather data for Africa/Saint-Louis committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:58.792649Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:59.149850Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:51:59.150291Z","level":"info","event":"INFO: Finished processing Africa/Saint-Louis.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:00.769667Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:00.769907Z","level":"info","event":"Fetching weather for Africa/Lomé...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:01.496639Z","level":"info","event":"INFO: Inserting location 'Ma-Africa' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:02.209875Z","level":"info","event":"SUCCESS: Location 'Ma-Africa' inserted with ID 35.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:02.210113Z","level":"info","event":"INFO: Processing current weather data for location ID 35...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:02.210284Z","level":"info","event":"INFO: Inserting condition 'Clear' with code 1000...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:02.570332Z","level":"info","event":"SUCCESS: Condition 'Clear' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:02.929977Z","level":"info","event":"SUCCESS: Current weather data for location ID 35 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:03.109307Z","level":"info","event":"SUCCESS: Weather data for Africa/Lomé committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:04.732484Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:05.147330Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:05.147960Z","level":"info","event":"INFO: Finished processing Africa/Lomé.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:06.587275Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:06.587620Z","level":"info","event":"Fetching weather for Africa/Sokodé...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:06.950831Z","level":"info","event":"INFO: Inserting location 'Ma-Africa' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:07.307532Z","level":"info","event":"SUCCESS: Location 'Ma-Africa' inserted with ID 35.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:07.307708Z","level":"info","event":"INFO: Processing current weather data for location ID 35...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:07.307821Z","level":"info","event":"INFO: Inserting condition 'Clear' with code 1000...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:07.667341Z","level":"info","event":"SUCCESS: Condition 'Clear' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:08.027657Z","level":"info","event":"SUCCESS: Current weather data for location ID 35 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:08.207348Z","level":"info","event":"SUCCESS: Weather data for Africa/Sokodé committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:09.107547Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:09.467256Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:09.467590Z","level":"info","event":"INFO: Finished processing Africa/Sokodé.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:11.266840Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:11.267075Z","level":"info","event":"Fetching weather for Africa/Kara...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:11.988671Z","level":"info","event":"INFO: Inserting location 'Kara' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:12.527284Z","level":"info","event":"SUCCESS: Location 'Kara' inserted with ID 43.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:12.527571Z","level":"info","event":"INFO: Processing current weather data for location ID 43...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:12.527730Z","level":"info","event":"INFO: Inserting condition 'Partly cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:12.888031Z","level":"info","event":"SUCCESS: Condition 'Partly cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:13.247713Z","level":"info","event":"SUCCESS: Current weather data for location ID 43 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:13.427392Z","level":"info","event":"SUCCESS: Weather data for Africa/Kara committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:14.508331Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:15.046571Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:15.046914Z","level":"info","event":"INFO: Finished processing Africa/Kara.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:15.546890Z","level":"info","event":"INFO: Extraction/loading done.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:18.107446Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:18.467291Z","level":"info","event":"INFO: Logged ETL process 'extract_and_load' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T16:52:18.468719","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}

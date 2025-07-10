@@ -1,0 +1,69 @@
+{"timestamp":"2025-07-02T17:03:17.377913","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-07-02T17:03:17.379317","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_etl_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-07-02T17:03:18.330431Z","level":"info","event":"INFO: Starting transform/load to warehouse...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:18.330579Z","level":"info","event":"INFO: Starting ETL process...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:18.330666Z","level":"info","event":"INFO: Attempting to establish database connections...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:20.009186Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:21.610051Z","level":"info","event":"Database connection to 'meteo_warehouse' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:21.610261Z","level":"info","event":"SUCCESS: PyMySQL connections established.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:27.027397Z","level":"info","event":"SUCCESS: SQLAlchemy engine for target database created and tested.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:27.027743Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:27.027986Z","level":"info","event":"INFO: Beginning data extraction from source database.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:27.339635Z","level":"info","event":"INFO: Extracted 20 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:27.633875Z","level":"info","event":"INFO: Extracted 8 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.441314Z","level":"info","event":"INFO: Extracted 22 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.441539Z","level":"info","event":"SUCCESS: All necessary data extracted from source tables.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.441783Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.441938Z","level":"info","event":"INFO: Beginning data transformation for dimension tables.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.442130Z","level":"info","event":"INFO: Transforming data for DimLieux...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.444810Z","level":"info","event":"SUCCESS: Transformed 20 unique locations for DimLieux.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.445048Z","level":"info","event":"INFO: Transforming data for DimConditionsMeteo...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.448659Z","level":"info","event":"SUCCESS: Transformed 8 unique conditions for DimConditionsMeteo.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.448891Z","level":"info","event":"INFO: Transforming data for DimTemps...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.456764Z","level":"info","event":"SUCCESS: Transformed 10 unique time entries for DimTemps.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.457020Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.457181Z","level":"info","event":"INFO: Preparing data for FaitDonneesMeteo (Fact Table).","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.460166Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:28.460367Z","level":"info","event":"INFO: Loading dimension data into target database.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:30.439697Z","level":"info","event":"ERROR: Error loading data into DimLieux: (pymysql.err.IntegrityError) (1062, \"Duplicate entry 'Dakar' for key 'DimLieux.nom_ville'\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:30.439959Z","level":"info","event":"[SQL: INSERT INTO \"DimLieux\" (nom_ville, region, pays) VALUES (%(nom_ville)s, %(region)s, %(pays)s)]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:30.440243Z","level":"info","event":"[parameters: ({'nom_ville': 'Abidjan', 'region': 'Lagunes', 'pays': \"Cote d'Ivoire\"}, {'nom_ville': 'Bafata', 'region': 'Bafata', 'pays': 'Guinea-Bissau'}, {'nom_ville': 'Bamako', 'region': 'Bamako', 'pays': 'Mali'}, {'nom_ville': 'Bissau', 'region': 'Bissau', 'pays': 'Guinea-Bissau'}, {'nom_ville': 'Bobo Dioulasso', 'region': 'Houet', 'pays': 'Burkina Faso'}, {'nom_ville': 'Bolama', 'region': 'Bolama', 'pays': 'Guinea-Bissau'}, {'nom_ville': 'Bouake', 'region': 'Marahoue', 'pays': \"Cote d'Ivoire\"}, {'nom_ville': 'Dakar', 'region': 'Dakar', 'pays': 'Senegal'}  ... displaying 10 of 20 total bound parameter sets ...  {'nom_ville': 'Yamoussoukro', 'region': \"N'zi-Comoe\", 'pays': \"Cote d'Ivoire\"}, {'nom_ville': 'Zinder', 'region': 'Zinder', 'pays': 'Niger'})]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:30.440357Z","level":"info","event":"(Background on this error at: https://sqlalche.me/e/14/gkpj)","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:32.345822Z","level":"info","event":"ERROR: Error loading data into DimConditionsMeteo: (pymysql.err.IntegrityError) (1062, \"Duplicate entry 'Clear' for key 'DimConditionsMeteo.texte_condition'\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:32.346128Z","level":"info","event":"[SQL: INSERT INTO \"DimConditionsMeteo\" (code_condition, texte_condition) VALUES (%(code_condition)s, %(texte_condition)s)]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:32.346310Z","level":"info","event":"[parameters: ({'code_condition': 1000, 'texte_condition': 'Clear'}, {'code_condition': 1183, 'texte_condition': 'Light rain'}, {'code_condition': 1240, 'texte_condition': 'Light rain shower'}, {'code_condition': 1243, 'texte_condition': 'Moderate or heavy rain shower'}, {'code_condition': 1276, 'texte_condition': 'Moderate or heavy rain with thunder'}, {'code_condition': 1003, 'texte_condition': 'Partly cloudy'}, {'code_condition': 1273, 'texte_condition': 'Patchy light rain with thunder'}, {'code_condition': 1063, 'texte_condition': 'Patchy rain nearby'})]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:32.346475Z","level":"info","event":"(Background on this error at: https://sqlalche.me/e/14/gkpj)","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:34.751080Z","level":"info","event":"SUCCESS: Loaded 10 rows into DimTemps.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:34.751333Z","level":"info","event":"SUCCESS: Dimension tables loaded.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:34.751497Z","level":"info","event":"INFO: Reading back surrogate keys from target dimension tables.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:35.052986Z","level":"info","event":"INFO: Extracted 12 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:35.353857Z","level":"info","event":"INFO: Extracted 20 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.292355Z","level":"info","event":"INFO: Extracted 2731 rows from query.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334130Z","level":"info","event":"SUCCESS: Surrogate keys retrieved.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334368Z","level":"info","event":"INFO: Joining fact data with dimension surrogate keys.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334521Z","level":"info","event":"INFO: Merging with DimLieux to get id_dim_lieu_fk...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334660Z","level":"info","event":"WARNING: 9 records in FaitDonneesMeteo could not find a matching DimLieux entry. Check data consistency.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334810Z","level":"info","event":"INFO: After DimLieux merge. Records with id_dim_lieu: 13/22.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.334941Z","level":"info","event":"INFO: Merging with DimConditionsMeteo to get id_dim_condition_fk...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.335230Z","level":"info","event":"WARNING: 3 records in FaitDonneesMeteo could not find a matching DimConditionsMeteo entry. Check data consistency.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.335374Z","level":"info","event":"INFO: After DimConditionsMeteo merge. Records with id_dim_condition: 19/22.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.335710Z","level":"info","event":"INFO: Merging with DimTemps to get id_dim_temps_fk...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.338665Z","level":"info","event":"INFO: After DimTemps merge. Records with id_dim_temps: 55/55.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.345569Z","level":"info","event":"WARNING: Dropped 28 rows from final fact table due to NULL foreign keys.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.345865Z","level":"info","event":"         Consider adjusting merge logic or source data to prevent missing dimension matches.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.346200Z","level":"info","event":"SUCCESS: Transformed 27 rows for FaitDonneesMeteo (after final FK check).","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.346352Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:40.346491Z","level":"info","event":"INFO: Loading fact data into target database.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.173668Z","level":"info","event":"SUCCESS: Loaded 27 rows into FaitDonneesMeteo.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.173912Z","level":"info","event":"SUCCESS: Fact table loaded.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.174204Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.174358Z","level":"info","event":"SUCCESS: ETL process completed successfully!","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.174508Z","level":"info","event":"INFO: Attempting to close database connections and dispose of engines.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.174783Z","level":"info","event":"INFO: Source database connection closed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.174937Z","level":"info","event":"INFO: Target database (pymysql) connection closed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.175090Z","level":"info","event":"INFO: Target database SQLAlchemy engine disposed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:42.175215Z","level":"info","event":"SUCCESS: All database connections and engines handled.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:50.000268Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:52.104390Z","level":"info","event":"INFO: Logged ETL process 'transfer_data_to_warehouse' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:52.104649Z","level":"info","event":"INFO: Transform/load done.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-02T17:03:52.105384","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}

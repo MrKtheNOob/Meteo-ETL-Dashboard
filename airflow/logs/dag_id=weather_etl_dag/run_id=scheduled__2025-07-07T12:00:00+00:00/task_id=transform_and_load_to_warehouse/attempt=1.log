@@ -1,0 +1,14 @@
+{"timestamp":"2025-07-07T12:00:53.338127","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-07-07T12:00:53.339223","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_etl_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-07-07T12:00:53.986013Z","level":"info","event":"INFO: Starting transform/load to warehouse...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:53.986168Z","level":"info","event":"INFO: Starting ETL process...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:53.986293Z","level":"info","event":"INFO: Attempting to establish database connections...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:53.990414Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.016462Z","level":"info","event":"Error connecting to MySQL database 'meteo_warehouse': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.016717Z","level":"info","event":"ERROR: Failed to establish one or both database connections. Exiting.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.016862Z","level":"info","event":"INFO: Attempting to close database connections and dispose of engines.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.017019Z","level":"info","event":"SUCCESS: All database connections and engines handled.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.041905Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.042148Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.042291Z","level":"info","event":"INFO: Transform/load done.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:54.042691","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}

@@ -1,0 +1,119 @@
+{"timestamp":"2025-07-07T12:00:07.670982","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-07-07T12:00:07.672136","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_etl_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-07-07T12:00:08.231118Z","level":"info","event":"INFO: Starting extraction/loading...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:09.230533Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:09.230752Z","level":"info","event":"Fetching weather for Africa/Porto-Novo...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:09.824566Z","level":"info","event":"INFO: Inserting location 'Porto Novo' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:10.458671Z","level":"info","event":"SUCCESS: Location 'Porto Novo' inserted with ID 4.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:10.458936Z","level":"info","event":"INFO: Processing current weather data for location ID 4...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:10.459059Z","level":"info","event":"INFO: Inserting condition 'Partly Cloudy' with code 1003...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:10.870794Z","level":"info","event":"SUCCESS: Condition 'Partly Cloudy' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:11.483341Z","level":"info","event":"SUCCESS: Current weather data for location ID 4 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:11.687351Z","level":"info","event":"SUCCESS: Weather data for Africa/Porto-Novo committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:12.636493Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:12.822762Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:12.848716Z","level":"info","event":"INFO: Finished processing Africa/Porto-Novo.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.109285Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.109516Z","level":"info","event":"Fetching weather for Africa/Bafata...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.315118Z","level":"info","event":"INFO: Inserting location 'Bafata' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.499866Z","level":"info","event":"SUCCESS: Location 'Bafata' inserted with ID 1.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.500082Z","level":"info","event":"INFO: Processing current weather data for location ID 1...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.500187Z","level":"info","event":"INFO: Inserting condition 'Light drizzle' with code 1153...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.685969Z","level":"info","event":"SUCCESS: Condition 'Light drizzle' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.876046Z","level":"info","event":"SUCCESS: Current weather data for location ID 1 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:14.964585Z","level":"info","event":"SUCCESS: Weather data for Africa/Bafata committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:15.512832Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:15.691292Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:15.691620Z","level":"info","event":"INFO: Finished processing Africa/Bafata.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:17.894171Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:17.894491Z","level":"info","event":"Fetching weather for Africa/Ouagadougou...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.104905Z","level":"info","event":"INFO: Inserting location 'Ouagadougou' into the database...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.294743Z","level":"info","event":"SUCCESS: Location 'Ouagadougou' inserted with ID 2.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.295046Z","level":"info","event":"INFO: Processing current weather data for location ID 2...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.295209Z","level":"info","event":"INFO: Inserting condition 'Patchy rain nearby' with code 1063...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.480133Z","level":"info","event":"SUCCESS: Condition 'Patchy rain nearby' inserted or updated successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.743367Z","level":"info","event":"SUCCESS: Current weather data for location ID 2 inserted successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:18.844730Z","level":"info","event":"SUCCESS: Weather data for Africa/Ouagadougou committed.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:20.078474Z","level":"info","event":"Database connection to 'meteo' established successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:20.260176Z","level":"info","event":"INFO: Logged ETL process 'process_city_data' with status 'success'.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:20.260518Z","level":"info","event":"INFO: Finished processing Africa/Ouagadougou.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:30.876312Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' (timed out)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:30.876556Z","level":"info","event":"ERROR: DB connection failed for Africa/Bobo-Dioulasso","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.064837Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno 101] Network is unreachable)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.065074Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.606216Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.606466Z","level":"info","event":"ERROR: DB connection failed for Africa/Abidjan","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.660707Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:42.660950Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.225154Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.225345Z","level":"info","event":"ERROR: DB connection failed for Africa/Yamoussoukro","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.310417Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.310591Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.844483Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.844736Z","level":"info","event":"ERROR: DB connection failed for Africa/Bouake","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.874585Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:43.874845Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.405142Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.405375Z","level":"info","event":"ERROR: DB connection failed for Africa/Bissau","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.434875Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.435068Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.968081Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.968246Z","level":"info","event":"ERROR: DB connection failed for Africa/Gabu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.997329Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:44.997487Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:45.526214Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:45.526450Z","level":"info","event":"ERROR: DB connection failed for Africa/Bolama","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:45.552492Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:45.552774Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.082590Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.082763Z","level":"info","event":"ERROR: DB connection failed for Africa/Bamako","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.119582Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.119755Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.647872Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.648067Z","level":"info","event":"ERROR: DB connection failed for Africa/Sikasso","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.676472Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:46.676647Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.204259Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.204492Z","level":"info","event":"ERROR: DB connection failed for Africa/Segou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.230646Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.230867Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.759477Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.759661Z","level":"info","event":"ERROR: DB connection failed for Africa/Niamey","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.790506Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:47.790670Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.318383Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.318623Z","level":"info","event":"ERROR: DB connection failed for Africa/Zinder","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.345764Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.346019Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.884235Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.884404Z","level":"info","event":"ERROR: DB connection failed for Africa/Maradi","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.912479Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:48.912703Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:49.444243Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:49.444473Z","level":"info","event":"ERROR: DB connection failed for Africa/Dakar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:49.482989Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:49.483259Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.012346Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.012527Z","level":"info","event":"ERROR: DB connection failed for Africa/Thiès","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.038759Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.038945Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.567569Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.567826Z","level":"info","event":"ERROR: DB connection failed for Africa/Saint-Louis","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.593295Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:50.593460Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.123593Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.123827Z","level":"info","event":"ERROR: DB connection failed for Africa/Lomé","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.149484Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.149647Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.676645Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.676864Z","level":"info","event":"ERROR: DB connection failed for Africa/Sokodé","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.702535Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:51.702774Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.229981Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.230317Z","level":"info","event":"ERROR: DB connection failed for Africa/Kara","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.257846Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.258028Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.758077Z","level":"info","event":"INFO: Extraction/loading done.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.784671Z","level":"info","event":"Error connecting to MySQL database 'meteo': (2003, \"Can't connect to MySQL server on 'bamba-sdb-ahmadoubamba706-0e2.c.aivencloud.com' ([Errno -3] Temporary failure in name resolution)\")","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.784944Z","level":"info","event":"ERROR: Failed to connect to DB for ETL logging.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-07-07T12:00:52.785370","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
