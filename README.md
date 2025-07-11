@@ -84,3 +84,132 @@ Après la finalisation du pipeline Python, un prototype local Airflow a été in
 
 Ce projet a permis d’atteindre les objectifs fondamentaux d’ETL et d’entrepôt de données tout en fournissant une expérience réaliste et orientée production.  
 Il a renforcé les compétences techniques et stratégiques en ingénierie des données grâce à une combinaison de résolution de problèmes, conception de systèmes et flexibilité de pensée.
+
+# 🚀 Configuration du flux d'air
+
+```
+. ├── airflow
+│ ├── airflow.cfg
+│ ├── airflow.db
+│ ├── dags
+│ │ └── weather_etl_dag.py
+│ ├── docker-compose.yml
+│ ├── dockerfile
+```
+
+---
+
+## ✅ Prérequis
+
+* Docker et Docker Compose installés
+* Connaissances de base du terminal
+
+---
+
+## 💡 Contenu du dossier expliqué
+
+* `airflow.cfg` — Fichier de configuration Airflow
+* `airflow.db` — Base de données SQLite locale pour les métadonnées Airflow (si vous n'utilisez pas de base de données externe)
+* `dags/` — Votre Les DAG se trouvent ici (par exemple, `weather_etl_dag.py`)
+* `docker-compose.yml` — Définit les services et comment exécuter Airflow dans les conteneurs
+* `dockerfile` — Définition d'une image personnalisée (par exemple, pour installer des packages supplémentaires)
+
+---
+
+## 🏗️ Créer l'image Docker Airflow
+
+Dans le répertoire `airflow` :
+
+```bash
+cd airflow
+docker build -t custom-airflow:latest -f dockerfile . ```
+
+---
+
+## ⚙️ Vérifier / modifier `docker-compose.yml`
+
+Assurez-vous que `docker-compose.yml` utilise l'image personnalisée que vous venez de créer :
+
+```yaml
+version : '3'
+services :
+airflow :
+image : custom-airflow:latest
+environnement :
+- AIRFLOW__CORE__LOAD_EXAMPLES=False
+- AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+volumes :
+- ./dags:/opt/airflow/dags
+- ./airflow.cfg:/opt/airflow/airflow.cfg
+- ./airflow.db:/opt/airflow/airflow.db
+ports :
+- "8080:8080"
+commande : Serveur web
+```
+
+---
+
+## 🏃 Démarrer Airflow
+
+```bash
+docker-compose up
+```
+
+* Ceci exécute le serveur web Airflow à l'adresse **[http://localhost:8080](http://localhost:8080)**
+* Par défaut, aucun ordonnanceur n'est exécuté séparément. Si nécessaire, ajoutez-le à `docker-compose.yml` comme service supplémentaire.
+
+---
+
+## ⚙️ Initialiser la base de données (uniquement lors de la première exécution)
+
+Si c'est votre première exécution :
+
+```bash
+docker-compose run airflow airflow db init
+```
+
+Puis redémarrez :
+
+```bash
+docker-compose up
+```
+
+---
+
+## 🔎 Accéder à l'interface utilisateur d'Airflow
+
+* Ouvrir **[http://localhost:8080](http://localhost:8080)**
+* Identifiants par défaut : `airflow` / `airflow` (si inchangé)
+
+---
+
+## ✨ Vérifiez votre DAG
+
+Dans l'interface utilisateur, vous devriez voir `weather_etl_dag.py` listé.
+Activez-le et déclenchez-le si nécessaire.
+
+---
+
+## 🛑 Arrêter Airflow
+
+```bash
+docker-compose down
+```
+
+---
+
+## 💬 Remarques
+
+* Vous utilisez **SQLite**, parfait pour les tests locaux. En production, utilisez Postgres ou MySQL.
+* Votre `airflow.db` est stocké sous forme de fichier et monté, ce qui garantit la persistance des données après le redémarrage du conteneur.
+* Personnalisez `dockerfile` pour installer des packages Python ou des outils système selon vos besoins (par exemple, `RUN pip install requests`).
+
+
+## ✅ Résumé
+
+1️⃣ Construire votre image
+2️⃣ Vérifier que `docker-compose.yml` pointe vers elle
+3️⃣ Exécuter `docker-compose up`
+4️⃣ Accéder à l'interface utilisateur à `localhost:8080`
+
+---
