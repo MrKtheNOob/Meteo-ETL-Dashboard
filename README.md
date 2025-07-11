@@ -85,7 +85,7 @@ Après la finalisation du pipeline Python, un prototype local Airflow a été in
 Ce projet a permis d’atteindre les objectifs fondamentaux d’ETL et d’entrepôt de données tout en fournissant une expérience réaliste et orientée production.  
 Il a renforcé les compétences techniques et stratégiques en ingénierie des données grâce à une combinaison de résolution de problèmes, conception de systèmes et flexibilité de pensée.
 
-# 🚀 Configuration du flux d'air
+# Configuration de Airflow
 
 ```
 . ├── airflow
@@ -106,7 +106,7 @@ Il a renforcé les compétences techniques et stratégiques en ingénierie des d
 
 ---
 
-## 💡 Contenu du dossier expliqué
+## Contenu du dossier expliqué
 
 * `airflow.cfg` — Fichier de configuration Airflow
 * `airflow.db` — Base de données SQLite locale pour les métadonnées Airflow (si vous n'utilisez pas de base de données externe)
@@ -116,7 +116,7 @@ Il a renforcé les compétences techniques et stratégiques en ingénierie des d
 
 ---
 
-## 🏗️ Créer l'image Docker Airflow
+## Créer l'image Docker Airflow
 
 Dans le répertoire `airflow` :
 
@@ -149,7 +149,7 @@ commande : Serveur web
 
 ---
 
-## 🏃 Démarrer Airflow
+## Démarrer Airflow
 
 ```bash
 docker-compose up
@@ -160,7 +160,7 @@ docker-compose up
 
 ---
 
-## ⚙️ Initialiser la base de données (uniquement lors de la première exécution)
+## Initialiser la base de données (uniquement lors de la première exécution)
 
 Si c'est votre première exécution :
 
@@ -176,21 +176,21 @@ docker-compose up
 
 ---
 
-## 🔎 Accéder à l'interface utilisateur d'Airflow
+## Accéder à l'interface utilisateur d'Airflow
 
 * Ouvrir **[http://localhost:8080](http://localhost:8080)**
 * Identifiants par défaut : `airflow` / `airflow` (si inchangé)
 
 ---
 
-## ✨ Vérifiez votre DAG
+## Vérifiez votre DAG
 
 Dans l'interface utilisateur, vous devriez voir `weather_etl_dag.py` listé.
 Activez-le et déclenchez-le si nécessaire.
 
 ---
 
-## 🛑 Arrêter Airflow
+## Arrêter Airflow
 
 ```bash
 docker-compose down
