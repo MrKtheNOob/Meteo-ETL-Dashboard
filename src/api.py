@@ -1,11 +1,10 @@
-from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask import Flask, jsonify , render_template, send_from_directory
 from flask_caching import Cache
 from ETL import run_etl
 from utils import get_db_connection
 import threading
 import os
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
 
 # Load environment variables
 load_dotenv()
