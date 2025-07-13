@@ -3,10 +3,49 @@ from dotenv import load_dotenv
 from pymysql import Connection
 import pymysql
 from pymysql import cursors
-from datetime import datetime
 
-from models import DimTemps
 
+UEMOA_CITIES = [
+	# Benin
+	"Africa/Porto-Novo", "Africa/Cotonou", "Africa/Parakou", "Africa/Abomey-Calavi", "Africa/Djougou",
+	"Africa/Bohicon", "Africa/Kandi", "Africa/Natitingou", "Africa/Ouidah", "Africa/Lokossa",
+	"Africa/Savalou", "Africa/Sakete", "Africa/Dassa-Zoume", "Africa/Malanville", "Africa/Pobe",
+
+	# Burkina Faso
+	"Africa/Ouagadougou", "Africa/Bobo-Dioulasso", "Africa/Koudougou", "Africa/Ouahigouya",
+	"Africa/Banfora", "Africa/Fada_Ngourma", "Africa/Dedougou", "Africa/Nouna",
+	"Africa/Dori", "Africa/Manga", "Africa/Tenkodogo", "Africa/Ziniare",
+
+	# Côte d'Ivoire
+	"Africa/Abidjan", "Africa/Yamoussoukro", "Africa/Bouake", "Africa/Daloa", "Africa/Korhogo",
+	"Africa/Man", "Africa/San-Pedro", "Africa/Gagnoa", "Africa/Divo", "Africa/Anyama",
+	"Africa/Adzope", "Africa/Abengourou", "Africa/Grand-Bassam", "Africa/Aboisso", "Africa/Seguela",
+
+	# Guinee-Bissau
+	"Africa/Bissau", "Africa/Bafata", "Africa/Gabu", "Africa/Canchungo", "Africa/Cacheu",
+	"Africa/Bolama", "Africa/Bissora", "Africa/Farim", "Africa/Catio", "Africa/Buba",
+
+	# Mali
+	"Africa/Bamako", "Africa/Sikasso", "Africa/Segou", "Africa/Mopti", "Africa/Kayes",
+	"Africa/Koutiala", "Africa/Gao", "Africa/Kati", "Africa/San", "Africa/Timbuktu",
+	"Africa/Niono", "Africa/Bougouni", "Africa/Kidal", "Africa/Tessalit",
+
+	# Niger
+	"Africa/Niamey", "Africa/Zinder", "Africa/Maradi", "Africa/Tahoua", "Africa/Agadez",
+	"Africa/Arlit", "Africa/Dosso", "Africa/Diffa", "Africa/Birni-N'Konni", "Africa/Gaya",
+	"Africa/Tillaberi", "Africa/Tera",
+
+	# Senegal
+	"Africa/Dakar", "Africa/Pikine", "Africa/Touba", "Africa/Thies", "Africa/Saint-Louis",
+	"Africa/Kaolack", "Africa/Ziguinchor", "Africa/Mbour", "Africa/Rufisque", "Africa/Diourbel",
+	"Africa/Tambacounda", "Africa/Louga", "Africa/Kolda", "Africa/Fatick", "Africa/Kaffrine",
+	"Africa/Sedhiou", "Africa/Kedougou", "Africa/Matam",
+
+	# Togo
+	"Africa/Lome", "Africa/Sokode", "Africa/Kara", "Africa/Kpalime", "Africa/Atakpame",
+	"Africa/Dapaong", "Africa/Tsevie", "Africa/Aneho", "Africa/Mango", "Africa/Bassar",
+	"Africa/Tchamba", "Africa/Niamtougou", "Africa/Notse", "Africa/Vogan",
+]
 # Ordre de suppression
 TABLE_DROP_ORDER = [
     "donnees_meteo",

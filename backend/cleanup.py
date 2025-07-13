@@ -1,5 +1,3 @@
-from pymysql import Error
-
 from utils import TABLE_CREATE_STATEMENTS, TABLE_DROP_ORDER, connect_mysql
 
 
@@ -67,6 +65,5 @@ def main():
 if __name__ == "__main__":
     print("INFO: Starting database cleanup and recreation script.")
     print("INFO: Ensure the MySQL service is running.")
-    print("INFO: Install the PyMySQL connector if not already installed: pip install pymysql")
     print("\nWARNING: This script will delete all data from the specified tables!")
     main()

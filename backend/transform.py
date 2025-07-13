@@ -1,266 +1,395 @@
-import os
 import pymysql
-# This line is crucial for pandas and SQLAlchemy to properly use pymysql
-# when they might be expecting the 'MySQLdb' driver.
-
 import pandas as pd
-from datetime import datetime, date
-from typing import Optional, cast, List, Dict, Any
-from sqlalchemy import create_engine
-from sqlalchemy.engine import Engine
+from datetime import date
+from typing import Optional, List, Dict, Any, Tuple
+import os
 
-from utils import get_db_connection # Import the function as requested
+from pymysql import cursors
+from pymysql.connections import Connection
+
+from utils import get_db_connection
 
 pymysql.install_as_MySQLdb()
-# --- Database Configuration for SQLAlchemy Engine (UPDATE THESE WITH YOUR ACTUAL CREDENTIALS) ---
-# This is needed for pandas.to_sql when using a SQLAlchemy engine for loading
-DB_SQL_ALCHEMY_URLS = {
-    'source_db_url': f'{os.getenv("DB_LINK")}/meteo',
-    'target_db_url': f'{os.getenv("DB_LINK")}/meteo_warehouse'
-}
 
-def extract_data_to_dataframe(conn: pymysql.connections.Connection, query: str) -> pd.DataFrame:
+
+def extract_data_to_dataframe(conn: Connection, query: str) -> pd.DataFrame:
     """Extracts data from a database using a query and returns a pandas DataFrame."""
     try:
-        with conn.cursor() as cursor:
+        with conn.cursor(pymysql.cursors.DictCursor) as cursor:
             cursor.execute(query)
             data: List[Dict[str, Any]] = cursor.fetchall()
-            # If using DictCursor, keys are column names. If not, get from cursor.description
-            columns: List[str] = [desc[0] for desc in cursor.description] if cursor.description else []
-
-        df = pd.DataFrame(data, columns=columns)
+        df = pd.DataFrame(data)
         print(f"INFO: Extracted {len(df)} rows from query.")
         return df
     except Exception as e:
         print(f"ERROR: Error extracting data from query: {e}")
-        return pd.DataFrame() # Return empty DataFrame on error
+        return pd.DataFrame()
 
-def load_dataframe_to_db(df: pd.DataFrame, engine: Engine, table_name: str, if_exists_option: str = 'append', index: bool = False) -> None:
-    """Loads a pandas DataFrame into a specified database table using a SQLAlchemy engine."""
+
+def load_data_bulk_upsert(
+    cursor: pymysql.cursors.Cursor,
+    table_name: str,
+    columns: List[str],
+    data: List[Tuple[Any, ...]],
+    unique_key_columns: List[
+        str
+    ],  # Columns that form the unique key for ON DUPLICATE KEY UPDATE
+) -> int:
+    """
+    Performs a bulk upsert (INSERT...ON DUPLICATE KEY UPDATE) using pymysql's executemany.
+    Returns the number of rows affected.
+    """
+    if not data:
+        print(
+            f"INFO: No data to insert/update into {table_name}. Skipping bulk operation."
+        )
+        return 0
+
+    placeholders = ", ".join(["%s"] * len(columns))
+    cols_str = ", ".join(columns)
+
+    update_parts = [
+        f"{col} = VALUES({col})" for col in columns if col not in unique_key_columns
+    ]
+
+    if not update_parts:
+        update_str = f"{unique_key_columns[0]} = VALUES({unique_key_columns[0]})"
+    else:
+        update_str = ", ".join(update_parts)
+
+    query = f"INSERT INTO {table_name} ({cols_str}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {update_str}"
+
     try:
-        # Use pandas to_sql method with the SQLAlchemy engine
-        df.to_sql(name=table_name, con=engine, if_exists=if_exists_option, index=index)
-        print(f"SUCCESS: Loaded {len(df)} rows into {table_name}.")
+        print(f"INFO: Attempting to bulk upsert {len(data)} rows into {table_name}...")
+        cursor.executemany(query, data)
+        print(
+            f"SUCCESS: Bulk upsert into {table_name} completed. Rows affected: {cursor.rowcount}."
+        )
+        return cursor.rowcount
     except Exception as e:
-        print(f"ERROR: Error loading data into {table_name}: {e}")
+        print(f"ERROR: Failed to bulk upsert into {table_name}: {e}")
+        raise
+
 
 def transform_load_to_warehouse() -> None:
-    """Main ETL process to extract, transform, and load data."""
-    source_conn: Optional[pymysql.connections.Connection] = None
-    target_conn: Optional[pymysql.connections.Connection] = None
-    target_engine: Optional[Engine] = None
+    """Main ETL process to extract, transform, and incrementally load data into the star schema."""
+    source_conn: Optional[Connection] = None
+    target_conn: Optional[Connection] = None
+
     try:
-        print("INFO: Starting ETL process...")
         # --- 1. Establish Connections ---
         print("INFO: Attempting to establish database connections...")
-        # Get pymysql connections for extraction
-        source_conn = get_db_connection("meteo")          # Your schema2 database name
-        target_conn = get_db_connection("meteo_warehouse")      # Your star_schema database name
+        source_conn = get_db_connection("meteo")
+        target_conn = get_db_connection("meteo_warehouse")
 
         if not source_conn or not target_conn:
-            print("ERROR: Failed to establish one or both database connections. Exiting.")
+            print(
+                "ERROR: Failed to establish one or both database connections. Exiting."
+            )
             return
         print("SUCCESS: PyMySQL connections established.")
 
-        # Create SQLAlchemy engine for loading into target database
-        try:
-            target_engine = create_engine(DB_SQL_ALCHEMY_URLS['target_db_url'])
-            # Test connection
-            with target_engine.connect() as connection:
-                connection.close()
-            print("SUCCESS: SQLAlchemy engine for target database created and tested.")
-        except Exception as e:
-            print(f"ERROR: Could not create SQLAlchemy Engine for target database: {e}")
-            return
-
+        target_cursor = target_conn.cursor()
 
         # --- 2. Extract Data from Source ---
         print("\nINFO: Beginning data extraction from source database.")
-        df_lieux_source: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(source_conn, "SELECT id_lieu, nom, region, pays FROM lieux"))
-        df_conditions_source: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(source_conn, "SELECT code_condition, texte_condition FROM conditions_meteo"))
-        df_donnees_source: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(source_conn, "SELECT * FROM donnees_meteo"))
+        df_lieux_source: pd.DataFrame = extract_data_to_dataframe(
+            source_conn, "SELECT id_lieu, nom, region, pays FROM lieux"
+        )
+        df_conditions_source: pd.DataFrame = extract_data_to_dataframe(
+            source_conn, "SELECT code_condition, texte_condition FROM conditions_meteo"
+        )
+        df_donnees_source: pd.DataFrame = extract_data_to_dataframe(
+            source_conn, "SELECT * FROM donnees_meteo"
+        )
 
-        if df_lieux_source.empty or df_conditions_source.empty or df_donnees_source.empty:
-            print("ERROR: One or more source tables are empty or failed to extract. Exiting.")
+        if (
+            df_lieux_source.empty
+            or df_conditions_source.empty
+            or df_donnees_source.empty
+        ):
+            print(
+                "ERROR: One or more source tables are empty or failed to extract. Exiting."
+            )
             return
         print("SUCCESS: All necessary data extracted from source tables.")
 
-        # --- 3. Transform Data ---
+        # --- 3. Transform Data and Prepare for Dimension Upserts ---
         print("\nINFO: Beginning data transformation for dimension tables.")
 
-        # 3.1. Transform DimLieux
-        print("INFO: Transforming data for DimLieux...")
-        df_dim_lieux: pd.DataFrame = df_lieux_source[['nom', 'region', 'pays']].drop_duplicates()
-        df_dim_lieux = df_dim_lieux.rename(columns={'nom': 'nom_ville'})
-        print(f"SUCCESS: Transformed {len(df_dim_lieux)} unique locations for DimLieux.")
+        ## Corrected section for DimConditionsMeteo
+        print("INFO: Preparing data for DimConditionsMeteo...")
+        # DimConditionsMeteo should be populated directly from df_conditions_source
+        # as it represents the master list of conditions.
+        # df_conditions_source already contains 'code_condition' and 'texte_condition'.
+        dim_conditions_data = [
+            (row["code_condition"], row["texte_condition"])
+            for _, row in df_conditions_source.iterrows()
+        ]
+        print(
+            f"SUCCESS: Prepared {len(dim_conditions_data)} unique conditions for DimConditionsMeteo."
+        )
+        ## End of corrected section
 
-        # 3.2. Transform DimConditionsMeteo
-        print("INFO: Transforming data for DimConditionsMeteo...")
-        df_dim_conditions: pd.DataFrame = df_conditions_source[['code_condition', 'texte_condition']].drop_duplicates()
-        print(f"SUCCESS: Transformed {len(df_dim_conditions)} unique conditions for DimConditionsMeteo.")
+        # 3.2. Transform DimLieux
+        print("INFO: Preparing data for DimLieux...")
+        dim_lieux_df: pd.DataFrame = df_lieux_source[
+            ["nom", "region", "pays"]
+        ].drop_duplicates()
+        dim_lieux_data = [
+            (row["nom"], row["region"], row["pays"])
+            for _, row in dim_lieux_df.iterrows()
+        ]
+        print(f"SUCCESS: Prepared {len(dim_lieux_data)} unique locations for DimLieux.")
 
         # 3.3. Transform DimTemps
-        print("INFO: Transforming data for DimTemps...")
-        initial_na_count = df_donnees_source['datetime_observation'].isna().sum()
-        df_donnees_source['datetime_observation'] = pd.to_datetime(
-            df_donnees_source['datetime_observation'],
-            format='%Y-%m-%d %H:%M:%S',
-            errors='coerce'
+        print("INFO: Preparing data for DimTemps...")
+        initial_na_count = df_donnees_source["datetime_observation"].isna().sum()
+        df_donnees_source["datetime_observation"] = pd.to_datetime(
+            df_donnees_source["datetime_observation"],
+            format="%Y-%m-%d %H:%M:%S",
+            errors="coerce",
         )
-        final_na_count = df_donnees_source['datetime_observation'].isna().sum()
+        final_na_count = df_donnees_source["datetime_observation"].isna().sum()
         if final_na_count > initial_na_count:
-            print(f"WARNING: {final_na_count - initial_na_count} 'datetime_observation' values could not be parsed and were coerced to NaT.")
+            print(
+                f"WARNING: {final_na_count - initial_na_count} 'datetime_observation' values could not be parsed and were coerced to NaT. These records will be skipped in fact table loading."
+            )
 
-        df_dim_temps: pd.DataFrame = pd.DataFrame({
-            'date': df_donnees_source['datetime_observation'].dt.date,
-            'annee': df_donnees_source['datetime_observation'].dt.year,
-            'mois': df_donnees_source['datetime_observation'].dt.month,
-            'jour': df_donnees_source['datetime_observation'].dt.day,
-            'heure': df_donnees_source['datetime_observation'].dt.hour,
-            'minute': df_donnees_source['datetime_observation'].dt.minute,
-            'jour_semaine': df_donnees_source['datetime_observation'].dt.day_name(),
-            'nom_mois': df_donnees_source['datetime_observation'].dt.month_name()
-        }).drop_duplicates()
-        print(f"SUCCESS: Transformed {len(df_dim_temps)} unique time entries for DimTemps.")
+        df_donnees_valid_time = df_donnees_source.dropna(
+            subset=["datetime_observation"]
+        )
 
-        # 3.4. Transform FaitDonneesMeteo (Fact Table)
+        dim_temps_df: pd.DataFrame = pd.DataFrame(
+            {
+                "date": df_donnees_valid_time["datetime_observation"].dt.date,
+                "annee": df_donnees_valid_time["datetime_observation"].dt.year,
+                "mois": df_donnees_valid_time["datetime_observation"].dt.month,
+                "jour": df_donnees_valid_time["datetime_observation"].dt.day,
+                "heure": df_donnees_valid_time["datetime_observation"].dt.hour,
+                "minute": df_donnees_valid_time["datetime_observation"].dt.minute,
+                "jour_semaine": df_donnees_valid_time[
+                    "datetime_observation"
+                ].dt.day_name(),
+                "nom_mois": df_donnees_valid_time[
+                    "datetime_observation"
+                ].dt.month_name(),
+            }
+        ).drop_duplicates()
+
+        dim_temps_data = [
+            (
+                row["date"],
+                row["annee"],
+                row["mois"],
+                row["jour"],
+                row["heure"],
+                row["minute"],
+                row["jour_semaine"],
+                row["nom_mois"],
+            )
+            for _, row in dim_temps_df.iterrows()
+        ]
+        print(
+            f"SUCCESS: Prepared {len(dim_temps_data)} unique time entries for DimTemps."
+        )
+
+        # --- 4. Load Dimension Tables (Upsert) and Retrieve All Surrogate Keys ---
+        print(
+            "\nINFO: Loading dimension data into target database (upserting) and retrieving surrogate keys."
+        )
+        target_conn.begin()
+
+        load_data_bulk_upsert(
+            target_cursor,
+            "DimConditionsMeteo",
+            ["code_condition", "texte_condition"],
+            dim_conditions_data,
+            ["code_condition"],
+        )
+
+        load_data_bulk_upsert(
+            target_cursor,
+            "DimLieux",
+            ["nom_ville", "region", "pays"],
+            dim_lieux_data,
+            ["nom_ville"],
+        )
+
+        load_data_bulk_upsert(
+            target_cursor,
+            "DimTemps",
+            [
+                "date",
+                "annee",
+                "mois",
+                "jour",
+                "heure",
+                "minute",
+                "jour_semaine",
+                "nom_mois",
+            ],
+            dim_temps_data,
+            ["date", "annee", "mois", "jour", "heure", "minute"],
+        )
+
+        print(
+            "INFO: Reading back all surrogate keys from target dimension tables for mapping."
+        )
+        df_dim_lieux_target_full: pd.DataFrame = extract_data_to_dataframe(
+            target_conn, "SELECT id_dim_lieu, nom_ville, region, pays FROM DimLieux"
+        )
+        df_dim_conditions_target_full: pd.DataFrame = extract_data_to_dataframe(
+            target_conn,
+            "SELECT id_dim_condition, code_condition FROM DimConditionsMeteo",
+        )
+        df_dim_temps_target_full: pd.DataFrame = extract_data_to_dataframe(
+            target_conn,
+            "SELECT id_dim_temps, date, annee, mois, jour, heure, minute FROM DimTemps",
+        )
+        print("SUCCESS: All surrogate keys retrieved.")
+
+        lieu_nk_to_sk: Dict[Tuple[str, str, str], int] = {
+            (row["nom_ville"], row["region"], row["pays"]): row["id_dim_lieu"]
+            for _, row in df_dim_lieux_target_full.iterrows()
+        }
+        condition_nk_to_sk: Dict[int, int] = {
+            row["code_condition"]: row["id_dim_condition"]
+            for _, row in df_dim_conditions_target_full.iterrows()
+        }
+        df_dim_temps_target_full["date"] = pd.to_datetime(
+            df_dim_temps_target_full["date"]
+        ).dt.date
+        temps_nk_to_sk: Dict[Tuple[date, int, int, int, int, int], int] = {
+            (
+                row["date"],
+                row["annee"],
+                row["mois"],
+                row["jour"],
+                row["heure"],
+                row["minute"],
+            ): row["id_dim_temps"]
+            for _, row in df_dim_temps_target_full.iterrows()
+        }
+        print("SUCCESS: Natural key to surrogate key mappings created.")
+
+        # --- 5. Prepare and Load Fact Table ---
         print("\nINFO: Preparing data for FaitDonneesMeteo (Fact Table).")
-        # Ensure these operations are done AFTER datetime conversion
-        df_donnees_source['temp_date'] = df_donnees_source['datetime_observation'].dt.date
-        df_donnees_source['temp_annee'] = df_donnees_source['datetime_observation'].dt.year
-        df_donnees_source['temp_mois'] = df_donnees_source['datetime_observation'].dt.month
-        df_donnees_source['temp_jour'] = df_donnees_source['datetime_observation'].dt.day
-        df_donnees_source['temp_heure'] = df_donnees_source['datetime_observation'].dt.hour
-        df_donnees_source['temp_minute'] = df_donnees_source['datetime_observation'].dt.minute
+        fait_donnees_meteo_data: List[Tuple[Any, ...]] = []
 
+        # Merge source location details to df_donnees_valid_time to get natural keys for joining
+        df_donnees_fact_prep = pd.merge(
+            df_donnees_valid_time,
+            df_lieux_source[["id_lieu", "nom", "region", "pays"]],
+            on="id_lieu",
+            how="left",
+        )
 
-        # --- 4. Load Dimension Tables to Target DB (then read back IDs for fact table) ---
-        print("\nINFO: Loading dimension data into target database.")
-        load_dataframe_to_db(df_dim_lieux, target_engine, 'DimLieux', if_exists_option='append')
-        load_dataframe_to_db(df_dim_conditions, target_engine, 'DimConditionsMeteo', if_exists_option='append')
-        load_dataframe_to_db(df_dim_temps, target_engine, 'DimTemps', if_exists_option='append')
-        print("SUCCESS: Dimension tables loaded.")
+        # Add surrogate keys to the DataFrame first for easier processing
+        df_donnees_fact_prep["id_dim_lieu_fk"] = df_donnees_fact_prep.apply(
+            lambda row: lieu_nk_to_sk.get((row["nom"], row["region"], row["pays"])),
+            axis=1,
+        )
 
-        print("INFO: Reading back surrogate keys from target dimension tables.")
-        # Use target_conn (pymysql connection) for reading back surrogate keys from the target DB
-        df_dim_lieux_target: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(target_conn, "SELECT id_dim_lieu, nom_ville, region, pays FROM DimLieux"))
-        df_dim_conditions_target: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(target_conn, "SELECT id_dim_condition, code_condition, texte_condition FROM DimConditionsMeteo"))
-        df_dim_temps_target: pd.DataFrame = cast(pd.DataFrame, extract_data_to_dataframe(target_conn, "SELECT id_dim_temps, date, annee, mois, jour, heure, minute FROM DimTemps"))
-        print("SUCCESS: Surrogate keys retrieved.")
+        # Ensure that code_condition exists in df_donnees_fact_prep before mapping
+        # If code_condition might be missing, handle with .get() or dropna prior
+        df_donnees_fact_prep["id_dim_condition_fk"] = df_donnees_fact_prep[
+            "code_condition"
+        ].map(condition_nk_to_sk)
 
-        # Convert 'date' column in target DimTemps to datetime.date objects for robust merging
-        df_dim_temps_target['date'] = pd.to_datetime(df_dim_temps_target['date']).dt.date
+        df_donnees_fact_prep["id_dim_temps_fk"] = df_donnees_fact_prep[
+            "datetime_observation"
+        ].apply(
+            lambda dt: (
+                temps_nk_to_sk.get(
+                    (dt.date(), dt.year, dt.month, dt.day, dt.hour, dt.minute)
+                )
+                if pd.notna(dt)
+                else None
+            )
+        )
 
-        # Join source fact data with loaded dimension data to get surrogate keys
-        print("INFO: Joining fact data with dimension surrogate keys.")
-        df_fait: pd.DataFrame = df_donnees_source.copy()
+        fks_to_check = ["id_dim_lieu_fk", "id_dim_temps_fk", "id_dim_condition_fk"]
+        initial_fact_rows = len(df_donnees_fact_prep)
+        df_fact_final = df_donnees_fact_prep.dropna(subset=fks_to_check)
+        if len(df_fact_final) < initial_fact_rows:
+            print(
+                f"WARNING: Dropped {initial_fact_rows - len(df_fact_final)} rows from fact table due to NULL foreign keys."
+            )
+            print(
+                "         This indicates a mismatch between source data and dimension tables."
+            )
 
-        # Merge with DimLieux to get id_dim_lieu_fk
-        print("INFO: Merging with DimLieux to get id_dim_lieu_fk...")
-        df_fait = pd.merge(df_fait, df_lieux_source[['id_lieu', 'nom', 'region', 'pays']], on='id_lieu', how='left')
-        df_fait = pd.merge(df_fait, df_dim_lieux_target,
-                           left_on=['nom', 'region', 'pays'],
-                           right_on=['nom_ville', 'region', 'pays'],
-                           how='left')
-        # Check for NaN in the merged foreign key column
-        missing_lieu_fks = df_fait['id_dim_lieu'].isna().sum()
-        if missing_lieu_fks > 0:
-            print(f"WARNING: {missing_lieu_fks} records in FaitDonneesMeteo could not find a matching DimLieux entry. Check data consistency.")
-            # Option: Drop rows with missing FKs if they are strictly required.
-            # df_fait.dropna(subset=['id_dim_lieu'], inplace=True)
-        df_fait = df_fait.drop(columns=['nom', 'region', 'pays', 'nom_ville'])
-        print(f"INFO: After DimLieux merge. Records with id_dim_lieu: {df_fait['id_dim_lieu'].notna().sum()}/{len(df_fait)}.")
+        for _, row in df_fact_final.iterrows():
+            fait_donnees_meteo_data.append(
+                (
+                    int(row["id_dim_lieu_fk"]),
+                    int(row["id_dim_temps_fk"]),
+                    int(row["id_dim_condition_fk"]),
+                    row["temperature_celsius"],
+                    row["vent_kph"],
+                    row["vent_degre"],
+                    row["direction_vent"],
+                    row["pression_millibars"],
+                    row["precipitation_mm"],
+                    row["humidite_pourcentage"],
+                    row["nuages_pourcentage"],
+                    row["visibilite_km"],
+                    row["indice_uv"],
+                    row["rafales_kph"],
+                )
+            )
 
+        print(
+            f"SUCCESS: Prepared {len(fait_donnees_meteo_data)} rows for FaitDonneesMeteo (after FK resolution)."
+        )
 
-        # Merge with DimConditionsMeteo to get id_dim_condition_fk
-        print("INFO: Merging with DimConditionsMeteo to get id_dim_condition_fk...")
-        df_fait = pd.merge(df_fait, df_conditions_source[['code_condition', 'texte_condition']], on='code_condition', how='left')
-        df_fait = pd.merge(df_fait, df_dim_conditions_target,
-                           left_on=['code_condition', 'texte_condition'],
-                           right_on=['code_condition', 'texte_condition'],
-                           how='left')
-        missing_condition_fks = df_fait['id_dim_condition'].isna().sum()
-        if missing_condition_fks > 0:
-            print(f"WARNING: {missing_condition_fks} records in FaitDonneesMeteo could not find a matching DimConditionsMeteo entry. Check data consistency.")
-            # df_fait.dropna(subset=['id_dim_condition'], inplace=True)
-        df_fait = df_fait.drop(columns=['code_condition', 'texte_condition'])
-        print(f"INFO: After DimConditionsMeteo merge. Records with id_dim_condition: {df_fait['id_dim_condition'].notna().sum()}/{len(df_fait)}.")
+        fact_unique_key = ["id_dim_lieu_fk", "id_dim_temps_fk"]
 
+        load_data_bulk_upsert(
+            target_cursor,
+            "FaitDonneesMeteo",
+            [
+                "id_dim_lieu_fk",
+                "id_dim_temps_fk",
+                "id_dim_condition_fk",
+                "temperature_celsius",
+                "vent_kph",
+                "vent_degre",
+                "direction_vent",
+                "pression_millibars",
+                "precipitation_mm",
+                "humidite_pourcentage",
+                "nuages_pourcentage",
+                "visibilite_km",
+                "indice_uv",
+                "rafales_kph",
+            ],
+            fait_donnees_meteo_data,
+            fact_unique_key,
+        )
 
-        # Merge with DimTemps to get id_dim_temps_fk
-        print("INFO: Merging with DimTemps to get id_dim_temps_fk...")
-        # Drop rows where datetime_observation was coerced to NaT BEFORE merging with DimTemps
-        initial_rows_before_time_dropna = len(df_fait)
-        df_fait = df_fait.dropna(subset=['datetime_observation', 'temp_date', 'temp_annee', 'temp_mois', 'temp_jour', 'temp_heure', 'temp_minute'])
-        if len(df_fait) < initial_rows_before_time_dropna:
-             print(f"WARNING: Dropped {initial_rows_before_time_dropna - len(df_fait)} rows due to unparseable datetime_observation for DimTemps merge.")
-
-        df_fait = pd.merge(df_fait, df_dim_temps_target,
-                           left_on=['temp_date', 'temp_annee', 'temp_mois', 'temp_jour', 'temp_heure', 'temp_minute'],
-                           right_on=['date', 'annee', 'mois', 'jour', 'heure', 'minute'],
-                           how='left',
-                           suffixes=('_fact', '_dim_temps'))
-
-        missing_temps_fks = df_fait['id_dim_temps'].isna().sum()
-        if missing_temps_fks > 0:
-            print(f"WARNING: {missing_temps_fks} records in FaitDonneesMeteo could not find a matching DimTemps entry. Check data consistency.")
-            # df_fait.dropna(subset=['id_dim_temps'], inplace=True) # Consider dropping rows with unmatchable time
-
-        print(f"INFO: After DimTemps merge. Records with id_dim_temps: {df_fait['id_dim_temps'].notna().sum()}/{len(df_fait)}.")
-
-
-        # Select relevant columns for FaitDonneesMeteo
-        # Ensure all FK columns are non-null before final selection if NOT NULL constraints are strict
-        # For 'id_dim_lieu_fk' etc. if they are not nullable in the DB,
-        # you MUST dropna(subset=['id_dim_lieu', 'id_dim_temps', 'id_dim_condition']) BEFORE this step.
-        df_fait_final: pd.DataFrame = df_fait[[
-            'id_dim_lieu', 'id_dim_temps', 'id_dim_condition',
-            'temperature_celsius', 'vent_kph', 'vent_degre', 'direction_vent',
-            'pression_millibars', 'precipitation_mm', 'humidite_pourcentage',
-            'nuages_pourcentage', 'visibilite_km', 'indice_uv', 'rafales_kph'
-        ]].rename(columns={
-            'id_dim_lieu': 'id_dim_lieu_fk',
-            'id_dim_temps': 'id_dim_temps_fk',
-            'id_dim_condition': 'id_dim_condition_fk'
-        })
-
-        # Final check for any remaining NaNs in foreign key columns before loading
-        # If the database columns are NOT NULL, rows with NaN here will cause the error.
-        fks_to_check = ['id_dim_lieu_fk', 'id_dim_temps_fk', 'id_dim_condition_fk']
-        initial_final_rows = len(df_fait_final)
-        df_fait_final.dropna(subset=fks_to_check, inplace=True)
-        if len(df_fait_final) < initial_final_rows:
-            print(f"WARNING: Dropped {initial_final_rows - len(df_fait_final)} rows from final fact table due to NULL foreign keys.")
-            print("         Consider adjusting merge logic or source data to prevent missing dimension matches.")
-
-
-        print(f"SUCCESS: Transformed {len(df_fait_final)} rows for FaitDonneesMeteo (after final FK check).")
-
-        # --- 5. Load Fact Table to Target DB ---
-        print("\nINFO: Loading fact data into target database.")
-        # Use target_engine (SQLAlchemy) for loading the fact table
-        load_dataframe_to_db(df_fait_final, target_engine, 'FaitDonneesMeteo', if_exists_option='append')
-        print("SUCCESS: Fact table loaded.")
+        target_conn.commit()
+        print("SUCCESS: Fact table loaded and committed.")
 
         print("\nSUCCESS: ETL process completed successfully!")
 
     except Exception as e:
         print(f"CRITICAL ERROR: An error occurred during the ETL process: {e}")
+        if target_conn:
+            target_conn.rollback()
+            print("INFO: Database transaction rolled back due to error.")
     finally:
-        # --- Close Connections ---
-        print("INFO: Attempting to close database connections and dispose of engines.")
+        print("INFO: Attempting to close database connections.")
         if source_conn:
             source_conn.close()
             print("INFO: Source database connection closed.")
         if target_conn:
             target_conn.close()
-            print("INFO: Target database (pymysql) connection closed.")
-        if target_engine: # Dispose of the SQLAlchemy engine
-            target_engine.dispose()
-            print("INFO: Target database SQLAlchemy engine disposed.")
-        print("SUCCESS: All database connections and engines handled.")
-        
-        
+            print("INFO: Target database connection closed.")
+        print("SUCCESS: All database connections handled.")
+
+
 if __name__ == "__main__":
     transform_load_to_warehouse()
     print("INFO: ETL process script completed. Check logs for details.")

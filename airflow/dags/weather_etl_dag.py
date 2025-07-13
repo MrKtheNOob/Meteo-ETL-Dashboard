@@ -7,92 +7,41 @@ import sys
 import os
 
 # Add src directory to Python path for custom module imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..','backend'))
 
 # Import ETL modules
-from Extract import WEATHERAPI_KEY, fetch_current_weather_data
-from Load_To_InterDB import insert_location, insert_weather_data
-from transform import transform_load_to_warehouse
-from cleanup import cleanup_and_recreate_db
-from utils import get_db_connection
-from models import CurrentWeatherApiResponse
-from typing import Optional
+from backend.Extract import extract
+from backend.Load_To_InterDB import bulk_insert_data
+from backend.transform import transform_load_to_warehouse
+from backend.cleanup import cleanup_and_recreate_db
+from backend.utils import get_db_connection
+from backend.models import CurrentWeatherApiResponse
+from typing import List, Optional
 
-# List of cities for ETL
-UEMOA_CITIES = [
-    "Africa/Porto-Novo", "Africa/Bafata",
-    "Africa/Ouagadougou", "Africa/Bobo-Dioulasso",
-    "Africa/Abidjan", "Africa/Yamoussoukro", "Africa/Bouake",
-    "Africa/Bissau", "Africa/Gabu", "Africa/Bolama",
-    "Africa/Bamako", "Africa/Sikasso", "Africa/Segou",
-    "Africa/Niamey", "Africa/Zinder", "Africa/Maradi",
-    "Africa/Dakar", "Africa/Thiès", "Africa/Saint-Louis",
-    "Africa/Lomé", "Africa/Sokodé", "Africa/Kara"
-]
-
-def log_etl_process(process_name: str, status: str, start_time: datetime, end_time: datetime = None, error_message: str = None, rows_processed: int = None) -> None:
-    conn = get_db_connection("meteo")
+def log_etl_process(process_name: str, status: str, start_time: datetime, end_time: Optional[datetime] = None, error_message: Optional[str] = None, rows_processed: Optional[int] = None) -> None:
+    """
+    Logs ETL process details into the etl_logs table in the meteo database.
+    """
+    conn = get_db_connection("meteo")  # Connect to the intermediate database
     if not conn:
-        print("ERROR: Failed to connect to DB for ETL logging.")
+        print("ERROR: Failed to establish database connection for logging.")
         return
+
     cursor = conn.cursor()
     try:
-        cursor.execute("""
-            INSERT INTO etl_logs (process_name, status, start_time, end_time, error_message, rows_processed)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, (process_name, status, start_time, end_time, error_message, rows_processed))
+        query = """
+        INSERT INTO etl_logs (process_name, status, start_time, end_time, error_message, rows_processed)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (process_name, status, start_time, end_time, error_message, rows_processed))
         conn.commit()
         print(f"INFO: Logged ETL process '{process_name}' with status '{status}'.")
     except Exception as e:
-        print(f"ERROR: ETL log insert failed - {e}")
+        print(f"ERROR: Failed to log ETL process '{process_name}' - {e}")
     finally:
         cursor.close()
         conn.close()
 
-def process_city_data(city: str) -> None:
-    start_time = datetime.now()
-    conn = get_db_connection("meteo")
-    if not conn:
-        print(f"ERROR: DB connection failed for {city}")
-        log_etl_process("process_city_data", "failed", start_time, error_message=f"DB connect failed for {city}")
-        return
-    cursor = conn.cursor()
-    rows_processed = 0
-    try:
-        print(f"Fetching weather for {city}...")
-        weather_data_raw: Optional[CurrentWeatherApiResponse] = fetch_current_weather_data(city)
-        if not weather_data_raw:
-            print(f"WARNING: Skipping {city}, API fetch failed.")
-            log_etl_process("process_city_data", "failed", start_time, error_message=f"API fetch failed for {city}")
-            return
-        try:
-            location_id: Optional[int] = insert_location(cursor, weather_data_raw.location)
-            if not location_id:
-                print(f"ERROR: Location insert failed for {city}")
-                log_etl_process("process_city_data", "failed", start_time, error_message=f"Location insert failed for {city}")
-                return
-            insert_weather_data(cursor, location_id, weather_data_raw)
-            conn.commit()
-            rows_processed += 1
-            print(f"SUCCESS: Weather data for {city} committed.")
-        except Exception as e:
-            print(f"ERROR: Rollback for {city} due to {e}")
-            conn.rollback()
-            log_etl_process("process_city_data", "failed", start_time, error_message=str(e))
-    except Exception as e:
-        print(f"ERROR: Unexpected error for {city}: {e}")
-        log_etl_process("process_city_data", "failed", start_time, error_message=str(e))
-    finally:
-        cursor.close()
-        conn.close()
-        log_etl_process("process_city_data", "success", start_time, datetime.now(), rows_processed=rows_processed)
-        print(f"INFO: Finished processing {city}.")
-
-def validate_api_key():
-    if not WEATHERAPI_KEY:
-        raise ValueError("WEATHERAPI_KEY not set. Provide your WeatherAPI key.")
-    print("INFO: WeatherAPI key validated.")
-    return True
 
 def cleanup_database():
     print("INFO: Starting DB cleanup...")
@@ -105,27 +54,32 @@ def cleanup_database():
     finally:
         conn.close()
 
-def extract_and_load_data():
+def extract_and_load_to_source():
     print("INFO: Starting extraction/loading...")
     start_time = datetime.now()
-    import time
-    for city in UEMOA_CITIES:
-        process_city_data(city)
-        time.sleep(0.5)  # To avoid API rate limit
-    print("INFO: Extraction/loading done.")
-    log_etl_process("extract_and_load", "success", start_time, datetime.now())
+    log_etl_process("run_etl", "running", start_time)
+    try:
+        raw_city_data:List[CurrentWeatherApiResponse]=extract()
+    except Exception as e:
+        print("Error extracting API data :",e)
+        log_etl_process("run_etl", "failed", start_time, error_message=f"Error extracting API data :{e}")
+        return
+    print("SUCCESS: API Extraction successful")
+    conn = get_db_connection("meteo")
+    bulk_insert_data(conn.cursor(),raw_city_data)
 
 def transform_and_load_to_warehouse():
     print("INFO: Starting transform/load to warehouse...")
     start_time = datetime.now()
     try:
-        transform_load_to_warehouse()
+        transform_load_to_warehouse()  # Hook to transfer data from intermediate DB to warehouse
         log_etl_process("transfer_data_to_warehouse", "success", start_time, datetime.now())
-        print("INFO: Transform/load done.")
     except Exception as e:
-        print(f"ERROR: Transform/load failed - {e}")
+        print(f"ERROR: Data transfer to warehouse failed - {e}")
         log_etl_process("transfer_data_to_warehouse", "failed", start_time, error_message=str(e))
-        raise
+
+    log_etl_process("run_etl", "success", start_time, datetime.now())
+    print("\nINFO: ETL process completed.")
 
 default_args = {
     'owner': 'airflow',
@@ -147,10 +101,9 @@ dag = DAG(
 )
 
 start_task = EmptyOperator(task_id='start', dag=dag)
-validate_api_task = PythonOperator(task_id='validate_api_key', python_callable=validate_api_key, dag=dag)
 cleanup_db_task = PythonOperator(task_id='cleanup_database', python_callable=cleanup_database, dag=dag)
-extract_load_task = PythonOperator(task_id='extract_and_load_data', python_callable=extract_and_load_data, dag=dag)
+extract_load_task = PythonOperator(task_id='extract_and_load_to_source', python_callable=extract_and_load_to_source, dag=dag)
 transform_warehouse_task = PythonOperator(task_id='transform_and_load_to_warehouse', python_callable=transform_and_load_to_warehouse, dag=dag)
 end_task = EmptyOperator(task_id='end', dag=dag)
 
-start_task >> validate_api_task >> cleanup_db_task >> extract_load_task >> transform_warehouse_task >> end_task
+start_task >> cleanup_db_task >> extract_load_task >> transform_warehouse_task >> end_task
